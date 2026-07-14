@@ -18,16 +18,19 @@ export default function Hero() {
             z-20
             flex
             items-center
-            bg-[#f1f8f3]
+            bg-gradient-to-br
+            from-[#eef8f1]
+            to-white
             px-6
             md:px-10
             lg:px-16
-            py-12
-            lg:py-16
+            py-14
+            lg:py-20
           "
         >
 
           <div className="max-w-xl">
+
 
             <h1
               className="
@@ -54,12 +57,14 @@ export default function Hero() {
             </h1>
 
 
+
             <p
               className="
-                mt-5
+                mt-6
                 text-base
                 md:text-lg
                 text-slate-600
+                leading-relaxed
                 max-w-lg
               "
             >
@@ -68,13 +73,16 @@ export default function Hero() {
             </p>
 
 
-            <div className="
-              flex
-              flex-col
-              sm:flex-row
-              gap-4
-              mt-8
-            ">
+
+            <div
+              className="
+                flex
+                flex-col
+                sm:flex-row
+                gap-4
+                mt-8
+              "
+            >
 
               <button
                 className="
@@ -84,31 +92,43 @@ export default function Hero() {
                   py-3
                   rounded-full
                   font-semibold
+                  shadow-lg
+                  transition
+                  hover:scale-105
+                  hover:bg-green-800
                 "
               >
                 📖 Tentang Kami
               </button>
 
 
+
               <button
                 className="
-                  border
+                  border-2
                   border-green-700
                   text-green-700
                   px-8
                   py-3
                   rounded-full
                   font-semibold
+                  transition
+                  hover:bg-green-700
+                  hover:text-white
                 "
               >
                 ▶ Video Profil
               </button>
 
+
             </div>
+
 
           </div>
 
+
         </div>
+
 
 
 
@@ -134,28 +154,44 @@ export default function Hero() {
           />
 
 
-          {/* CURVE DESKTOP SAJA */}
+
+          {/* OVERLAY FOTO */}
+          <div
+            className="
+              absolute
+              inset-0
+              bg-gradient-to-r
+              from-green-900/10
+              to-transparent
+            "
+          />
+
+
+
+          {/* CURVE */}
           <div
             className="
               hidden
               lg:block
               absolute
-              left-[-80px]
+              left-[-120px]
               top-0
               h-full
-              w-[170px]
-              bg-[#f1f8f3]
+              w-[220px]
+              bg-[#eef8f1]
               z-10
             "
             style={{
-              clipPath: "ellipse(70% 50% at 0% 50%)",
+              clipPath: "ellipse(65% 50% at 0% 50%)",
             }}
           />
+
 
         </div>
 
 
       </div>
+
 
     </section>
   );
