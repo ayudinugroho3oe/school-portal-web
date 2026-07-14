@@ -4,10 +4,14 @@ export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-white">
 
-      <div className="grid grid-cols-1 lg:grid-cols-[45%_55%] min-h-[600px]">
+      <div className="
+        grid
+        grid-cols-1
+        lg:grid-cols-[45%_55%]
+      ">
 
 
-        {/* BAGIAN TEKS */}
+        {/* TEXT */}
         <div
           className="
             relative
@@ -16,8 +20,10 @@ export default function Hero() {
             items-center
             bg-[#f1f8f3]
             px-6
+            md:px-10
             lg:px-16
-            py-16
+            py-12
+            lg:py-16
           "
         >
 
@@ -25,7 +31,8 @@ export default function Hero() {
 
             <h1
               className="
-                text-4xl
+                text-3xl
+                md:text-4xl
                 lg:text-5xl
                 font-extrabold
                 leading-tight
@@ -49,8 +56,9 @@ export default function Hero() {
 
             <p
               className="
-                mt-6
-                text-lg
+                mt-5
+                text-base
+                md:text-lg
                 text-slate-600
                 max-w-lg
               "
@@ -60,7 +68,13 @@ export default function Hero() {
             </p>
 
 
-            <div className="flex flex-wrap gap-5 mt-8">
+            <div className="
+              flex
+              flex-col
+              sm:flex-row
+              gap-4
+              mt-8
+            ">
 
               <button
                 className="
@@ -70,7 +84,6 @@ export default function Hero() {
                   py-3
                   rounded-full
                   font-semibold
-                  hover:bg-green-800
                 "
               >
                 📖 Tentang Kami
@@ -103,7 +116,8 @@ export default function Hero() {
         <div
           className="
             relative
-            h-[350px]
+            h-[320px]
+            md:h-[450px]
             lg:h-[600px]
           "
         >
@@ -120,7 +134,7 @@ export default function Hero() {
           />
 
 
-          {/* CURVE DESKTOP */}
+          {/* CURVE DESKTOP SAJA */}
           <div
             className="
               hidden
