@@ -2,14 +2,15 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-white">
+    <section className="relative overflow-hidden bg-[#e8f5e9]">
 
-      <div className="
-        grid
-        grid-cols-1
-        lg:grid-cols-[45%_55%]
-      ">
-
+      <div
+        className="
+          grid
+          grid-cols-1
+          lg:grid-cols-[45%_55%]
+        "
+      >
 
         {/* TEXT */}
         <div
@@ -18,19 +19,16 @@ export default function Hero() {
             z-20
             flex
             items-center
-            bg-gradient-to-br
-            from-[#eef8f1]
-            to-white
+            bg-[#e8f5e9]
             px-6
             md:px-10
             lg:px-16
-            py-14
-            lg:py-20
+            py-12
+            lg:py-16
           "
         >
 
           <div className="max-w-xl">
-
 
             <h1
               className="
@@ -57,14 +55,12 @@ export default function Hero() {
             </h1>
 
 
-
             <p
               className="
-                mt-6
+                mt-5
                 text-base
                 md:text-lg
                 text-slate-600
-                leading-relaxed
                 max-w-lg
               "
             >
@@ -92,9 +88,6 @@ export default function Hero() {
                   py-3
                   rounded-full
                   font-semibold
-                  shadow-lg
-                  transition
-                  hover:scale-105
                   hover:bg-green-800
                 "
               >
@@ -102,19 +95,16 @@ export default function Hero() {
               </button>
 
 
-
               <button
                 className="
-                  border-2
+                  border
                   border-green-700
                   text-green-700
                   px-8
                   py-3
                   rounded-full
                   font-semibold
-                  transition
-                  hover:bg-green-700
-                  hover:text-white
+                  hover:bg-green-50
                 "
               >
                 ▶ Video Profil
@@ -128,7 +118,6 @@ export default function Hero() {
 
 
         </div>
-
 
 
 
@@ -155,34 +144,21 @@ export default function Hero() {
 
 
 
-          {/* OVERLAY FOTO */}
-          <div
-            className="
-              absolute
-              inset-0
-              bg-gradient-to-r
-              from-green-900/10
-              to-transparent
-            "
-          />
-
-
-
           {/* CURVE */}
           <div
             className="
               hidden
               lg:block
               absolute
-              left-[-120px]
+              left-[-80px]
               top-0
               h-full
-              w-[220px]
-              bg-[#eef8f1]
+              w-[170px]
+              bg-[#e8f5e9]
               z-10
             "
             style={{
-              clipPath: "ellipse(65% 50% at 0% 50%)",
+              clipPath: "ellipse(70% 50% at 0% 50%)",
             }}
           />
 

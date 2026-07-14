@@ -4,55 +4,53 @@ export default function Navbar() {
   return (
     <>
       {/* HEADER */}
-      <header
+      <div
         className="
-          bg-white
+          bg-[#e8f5e9]
           px-4
           md:px-8
-          py-3
-          md:py-4
+          py-2
+          md:py-3
           flex
           items-center
           justify-between
-          border-b
-          border-gray-100
         "
       >
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
 
           <div
             className="
               relative
-              w-[70px]
-              h-[70px]
-              md:w-[90px]
-              md:h-[90px]
+              w-[60px]
+              h-[60px]
+              md:w-[80px]
+              md:h-[80px]
               flex-shrink-0
             "
           >
             <Image
               src="/logo.png"
-              alt="Logo TK Islam Ar Rahmah 48"
+              alt="Logo TK"
               fill
-              priority
               className="object-contain"
             />
           </div>
 
 
           <div>
+
             <h1
               className="
-                text-xl
+                text-lg
                 md:text-3xl
-                font-extrabold
+                font-bold
                 text-green-800
-                leading-tight
               "
             >
               TK Islam Ar Rahmah 48
             </h1>
+
 
             <p
               className="
@@ -70,7 +68,6 @@ export default function Navbar() {
 
 
 
-        {/* INFO DESKTOP */}
         <div
           className="
             hidden
@@ -78,35 +75,22 @@ export default function Navbar() {
             items-center
             gap-8
             text-gray-600
-            text-sm
           "
         >
 
-          <div>
-            ☎️ 08xxxxxxxxxx
-          </div>
+          <div>☎️ 08xxxxxxxxxx</div>
+          <div>✉️ info@arrahmah48.sch.id</div>
+          <div>📍 Jakarta</div>
 
-          <div>
-            ✉️ info@arrahmah48.sch.id
-          </div>
 
-          <div>
-            📍 Jakarta
-          </div>
-
-          <div
-            className="
-              text-green-700
-              text-xl
-              font-bold
-            "
-          >
+          <div className="text-green-700 text-xl">
             f　◎　▶
           </div>
 
         </div>
 
-      </header>
+
+      </div>
 
 
 
@@ -121,11 +105,9 @@ export default function Navbar() {
           flex
           items-center
           justify-between
-          shadow-md
         "
       >
 
-        {/* DESKTOP MENU */}
         <div
           className="
             hidden
@@ -136,42 +118,20 @@ export default function Navbar() {
           "
         >
 
-          <a
-            className="
-              border-b-4
-              border-yellow-400
-              pb-3
-              font-semibold
-            "
-          >
+          <a className="border-b-4 border-yellow-400 pb-3">
             Beranda
           </a>
 
-          <a>
-            Profil⌄
-          </a>
-
-          <a>
-            Program
-          </a>
-
-          <a>
-            Galeri
-          </a>
-
-          <a>
-            Guru
-          </a>
-
-          <a>
-            Kontak
-          </a>
+          <a>Profil⌄</a>
+          <a>Program</a>
+          <a>Galeri</a>
+          <a>Guru</a>
+          <a>Kontak</a>
 
         </div>
 
 
 
-        {/* MOBILE */}
         <button
           className="
             md:hidden
@@ -183,18 +143,14 @@ export default function Navbar() {
 
 
 
-        {/* PPDB */}
         <button
           className="
             bg-yellow-400
             text-green-900
             font-bold
-            px-6
+            px-5
             py-3
             rounded-full
-            shadow-lg
-            transition
-            hover:scale-105
             text-sm
             md:text-base
           "
