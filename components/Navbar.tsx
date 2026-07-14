@@ -4,41 +4,63 @@ export default function Navbar() {
   return (
     <>
       {/* HEADER */}
-      <div className="
-        bg-white
-        px-4
-        md:px-8
-        py-4
-        flex
-        items-center
-        justify-between
-      ">
+      <header
+        className="
+          bg-white
+          px-4
+          md:px-8
+          py-3
+          md:py-4
+          flex
+          items-center
+          justify-between
+          border-b
+          border-gray-100
+        "
+      >
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
 
-          <Image
-            src="/logo.png"
-            alt="Logo TK"
-            width={60}
-            height={60}
-            className="md:w-20 md:h-20"
-          />
+          <div
+            className="
+              relative
+              w-[70px]
+              h-[70px]
+              md:w-[90px]
+              md:h-[90px]
+              flex-shrink-0
+            "
+          >
+            <Image
+              src="/logo.png"
+              alt="Logo TK Islam Ar Rahmah 48"
+              fill
+              priority
+              className="object-contain"
+            />
+          </div>
+
 
           <div>
-            <h1 className="
-              text-lg
-              md:text-3xl
-              font-bold
-              text-green-800
-            ">
+            <h1
+              className="
+                text-xl
+                md:text-3xl
+                font-extrabold
+                text-green-800
+                leading-tight
+              "
+            >
               TK Islam Ar Rahmah 48
             </h1>
 
-            <p className="
-              text-sm
-              md:text-xl
-              text-gray-500
-            ">
+            <p
+              className="
+                text-sm
+                md:text-xl
+                text-gray-500
+              "
+            >
               Mendidik Generasi Qurani
             </p>
 
@@ -47,80 +69,136 @@ export default function Navbar() {
         </div>
 
 
-        <div className="
-          hidden
-          lg:flex
-          items-center
-          gap-8
-          text-gray-600
-        ">
 
-          <div>☎️ 08xxxxxxxxxx</div>
-          <div>✉️ info@arrahmah48.sch.id</div>
-          <div>📍 Jakarta</div>
+        {/* INFO DESKTOP */}
+        <div
+          className="
+            hidden
+            lg:flex
+            items-center
+            gap-8
+            text-gray-600
+            text-sm
+          "
+        >
 
-          <div className="text-green-700 text-xl">
+          <div>
+            ☎️ 08xxxxxxxxxx
+          </div>
+
+          <div>
+            ✉️ info@arrahmah48.sch.id
+          </div>
+
+          <div>
+            📍 Jakarta
+          </div>
+
+          <div
+            className="
+              text-green-700
+              text-xl
+              font-bold
+            "
+          >
             f　◎　▶
           </div>
 
         </div>
 
-      </div>
+      </header>
 
 
-      {/* MENU DESKTOP */}
-      <nav className="
-        bg-green-800
-        text-white
-        px-4
-        md:px-8
-        py-4
-        flex
-        items-center
-        justify-between
-      ">
 
+      {/* MENU */}
+      <nav
+        className="
+          bg-green-800
+          text-white
+          px-4
+          md:px-8
+          py-4
+          flex
+          items-center
+          justify-between
+          shadow-md
+        "
+      >
 
-        <div className="
-          hidden
-          md:flex
-          gap-8
-          lg:gap-12
-          text-lg
-        ">
+        {/* DESKTOP MENU */}
+        <div
+          className="
+            hidden
+            md:flex
+            gap-8
+            lg:gap-12
+            text-lg
+          "
+        >
 
-          <a className="border-b-4 border-yellow-400 pb-3">
+          <a
+            className="
+              border-b-4
+              border-yellow-400
+              pb-3
+              font-semibold
+            "
+          >
             Beranda
           </a>
 
-          <a>Profil⌄</a>
-          <a>Program</a>
-          <a>Galeri</a>
-          <a>Guru</a>
-          <a>Kontak</a>
+          <a>
+            Profil⌄
+          </a>
+
+          <a>
+            Program
+          </a>
+
+          <a>
+            Galeri
+          </a>
+
+          <a>
+            Guru
+          </a>
+
+          <a>
+            Kontak
+          </a>
 
         </div>
 
 
-        {/* MOBILE MENU */}
-        <button className="
-          md:hidden
-          text-2xl
-        ">
+
+        {/* MOBILE */}
+        <button
+          className="
+            md:hidden
+            text-3xl
+          "
+        >
           ☰
         </button>
 
 
-        <button className="
-          bg-yellow-400
-          text-green-900
-          font-bold
-          px-5
-          py-3
-          rounded-full
-          text-sm
-          md:text-base
-        ">
+
+        {/* PPDB */}
+        <button
+          className="
+            bg-yellow-400
+            text-green-900
+            font-bold
+            px-6
+            py-3
+            rounded-full
+            shadow-lg
+            transition
+            hover:scale-105
+            text-sm
+            md:text-base
+          "
+        >
           👥 PPDB 2026/2027
         </button>
 
