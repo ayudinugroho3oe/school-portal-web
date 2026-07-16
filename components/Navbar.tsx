@@ -1,11 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const menus = [
     { name: "Beranda", href: "/" },
@@ -20,7 +22,9 @@ export default function Navbar() {
     <>
       {/* HEADER */}
       <div className="bg-[#e8f5e9] px-4 md:px-8 py-2 md:py-3 flex items-center justify-between">
+
         <div className="flex items-center gap-3">
+
           <div className="relative w-[60px] h-[60px] md:w-[80px] md:h-[80px] flex-shrink-0">
             <Image
               src="/logo.png"
@@ -39,6 +43,7 @@ export default function Navbar() {
               Mendidik Generasi Qurani
             </p>
           </div>
+
         </div>
 
         <div className="hidden lg:flex items-center gap-8 text-gray-600">
@@ -50,49 +55,88 @@ export default function Navbar() {
             f ◎ ▶
           </div>
         </div>
+
       </div>
 
       {/* MENU */}
-      <nav className="bg-green-800 text-white px-4 md:px-8 py-4 flex items-center justify-between">
+      <nav className="bg-green-800 text-white">
 
-        <div className="hidden md:flex gap-8 lg:gap-12 text-lg">
+        <div className="px-4 md:px-8 py-4 flex items-center justify-between">
 
-          {menus.map((menu) => {
-            const active = pathname === menu.href;
+          {/* Desktop */}
+          <div className="hidden md:flex gap-8 lg:gap-12 text-lg">
 
-            return (
-              <Link
-                key={menu.href}
-                href={menu.href}
-                className={`
-                  pb-3
-                  transition
-                  hover:text-yellow-300
-                  ${
+            {menus.map((menu) => {
+
+              const active = pathname === menu.href;
+
+              return (
+                <Link
+                  key={menu.href}
+                  href={menu.href}
+                  className={`pb-3 transition hover:text-yellow-300 ${
                     active
                       ? "text-yellow-300 border-b-4 border-yellow-400"
                       : ""
-                  }
-                `}
-              >
-                {menu.name}
-              </Link>
-            );
-          })}
+                  }`}
+                >
+                  {menu.name}
+                </Link>
+              );
+
+            })}
+
+          </div>
+
+          {/* Mobile Hamburger */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="md:hidden text-4xl"
+          >
+            ☰
+          </button>
+
+          {/* PPDB */}
+          <button className="bg-yellow-400 text-green-900 font-bold px-5 py-3 rounded-full text-sm md:text-base hover:bg-yellow-300 transition">
+            👥 PPDB 2026/2027
+          </button>
 
         </div>
 
-        {/* MOBILE */}
-        <button className="md:hidden text-3xl">
-          ☰
-        </button>
+        {/* MOBILE MENU */}
+        {menuOpen && (
 
-        {/* PPDB */}
-        <button className="bg-yellow-400 text-green-900 font-bold px-5 py-3 rounded-full text-sm md:text-base hover:bg-yellow-300 transition">
-          👥 PPDB 2026/2027
-        </button>
+          <div className="md:hidden bg-green-700 border-t border-green-600">
+
+            {menus.map((menu) => {
+
+              const active = pathname === menu.href;
+
+              return (
+
+                <Link
+                  key={menu.href}
+                  href={menu.href}
+                  onClick={() => setMenuOpen(false)}
+                  className={`block px-6 py-4 border-b border-green-600 ${
+                    active
+                      ? "bg-green-900 text-yellow-300 font-semibold"
+                      : "hover:bg-green-600"
+                  }`}
+                >
+                  {menu.name}
+                </Link>
+
+              );
+
+            })}
+
+          </div>
+
+        )}
 
       </nav>
+
     </>
   );
 }
