@@ -1,33 +1,27 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+  const pathname = usePathname();
+
+  const menus = [
+    { name: "Beranda", href: "/" },
+    { name: "Profil", href: "/profil" },
+    { name: "Program", href: "/program" },
+    { name: "Galeri", href: "/galeri" },
+    { name: "Guru", href: "/guru" },
+    { name: "Kontak", href: "/kontak" },
+  ];
+
   return (
     <>
       {/* HEADER */}
-      <div
-        className="
-          bg-[#e8f5e9]
-          px-4
-          md:px-8
-          py-2
-          md:py-3
-          flex
-          items-center
-          justify-between
-        "
-      >
+      <div className="bg-[#e8f5e9] px-4 md:px-8 py-2 md:py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div
-            className="
-              relative
-              w-[60px]
-              h-[60px]
-              md:w-[80px]
-              md:h-[80px]
-              flex-shrink-0
-            "
-          >
+          <div className="relative w-[60px] h-[60px] md:w-[80px] md:h-[80px] flex-shrink-0">
             <Image
               src="/logo.png"
               alt="Logo TK"
@@ -59,56 +53,33 @@ export default function Navbar() {
       </div>
 
       {/* MENU */}
-      <nav
-        className="
-          bg-green-800
-          text-white
-          px-4
-          md:px-8
-          py-4
-          flex
-          items-center
-          justify-between
-        "
-      >
-        <div
-          className="
-            hidden
-            md:flex
-            gap-8
-            lg:gap-12
-            text-lg
-          "
-        >
-          <Link
-            href="/"
-            className="border-b-4 border-yellow-400 pb-3 hover:text-yellow-300 transition"
-          >
-            Beranda
-          </Link>
+      <nav className="bg-green-800 text-white px-4 md:px-8 py-4 flex items-center justify-between">
 
-          <Link
-            href="/profil"
-            className="hover:text-yellow-300 transition"
-          >
-            Profil
-          </Link>
+        <div className="hidden md:flex gap-8 lg:gap-12 text-lg">
 
-          <a className="cursor-pointer hover:text-yellow-300 transition">
-            Program
-          </a>
+          {menus.map((menu) => {
+            const active = pathname === menu.href;
 
-          <a className="cursor-pointer hover:text-yellow-300 transition">
-            Galeri
-          </a>
+            return (
+              <Link
+                key={menu.href}
+                href={menu.href}
+                className={`
+                  pb-3
+                  transition
+                  hover:text-yellow-300
+                  ${
+                    active
+                      ? "text-yellow-300 border-b-4 border-yellow-400"
+                      : ""
+                  }
+                `}
+              >
+                {menu.name}
+              </Link>
+            );
+          })}
 
-          <a className="cursor-pointer hover:text-yellow-300 transition">
-            Guru
-          </a>
-
-          <a className="cursor-pointer hover:text-yellow-300 transition">
-            Kontak
-          </a>
         </div>
 
         {/* MOBILE */}
@@ -116,20 +87,11 @@ export default function Navbar() {
           ☰
         </button>
 
-        <button
-          className="
-            bg-yellow-400
-            text-green-900
-            font-bold
-            px-5
-            py-3
-            rounded-full
-            text-sm
-            md:text-base
-          "
-        >
+        {/* PPDB */}
+        <button className="bg-yellow-400 text-green-900 font-bold px-5 py-3 rounded-full text-sm md:text-base hover:bg-yellow-300 transition">
           👥 PPDB 2026/2027
         </button>
+
       </nav>
     </>
   );
