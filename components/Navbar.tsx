@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Navbar() {
   return (
@@ -16,9 +17,7 @@ export default function Navbar() {
           justify-between
         "
       >
-
         <div className="flex items-center gap-3">
-
           <div
             className="
               relative
@@ -37,62 +36,27 @@ export default function Navbar() {
             />
           </div>
 
-
           <div>
-
-            <h1
-              className="
-                text-lg
-                md:text-3xl
-                font-bold
-                text-green-800
-              "
-            >
+            <h1 className="text-lg md:text-3xl font-bold text-green-800">
               TK Islam Ar Rahmah 48
             </h1>
 
-
-            <p
-              className="
-                text-sm
-                md:text-xl
-                text-gray-500
-              "
-            >
+            <p className="text-sm md:text-xl text-gray-500">
               Mendidik Generasi Qurani
             </p>
-
           </div>
-
         </div>
 
-
-
-        <div
-          className="
-            hidden
-            lg:flex
-            items-center
-            gap-8
-            text-gray-600
-          "
-        >
-
+        <div className="hidden lg:flex items-center gap-8 text-gray-600">
           <div>☎️ 08xxxxxxxxxx</div>
           <div>✉️ info@arrahmah48.sch.id</div>
           <div>📍 Jakarta</div>
 
-
           <div className="text-green-700 text-xl">
-            f　◎　▶
+            f ◎ ▶
           </div>
-
         </div>
-
-
       </div>
-
-
 
       {/* MENU */}
       <nav
@@ -107,7 +71,6 @@ export default function Navbar() {
           justify-between
         "
       >
-
         <div
           className="
             hidden
@@ -117,31 +80,41 @@ export default function Navbar() {
             text-lg
           "
         >
-
-          <a className="border-b-4 border-yellow-400 pb-3">
+          <Link
+            href="/"
+            className="border-b-4 border-yellow-400 pb-3 hover:text-yellow-300 transition"
+          >
             Beranda
+          </Link>
+
+          <Link
+            href="/profil"
+            className="hover:text-yellow-300 transition"
+          >
+            Profil
+          </Link>
+
+          <a className="cursor-pointer hover:text-yellow-300 transition">
+            Program
           </a>
 
-          <a>Profil⌄</a>
-          <a>Program</a>
-          <a>Galeri</a>
-          <a>Guru</a>
-          <a>Kontak</a>
+          <a className="cursor-pointer hover:text-yellow-300 transition">
+            Galeri
+          </a>
 
+          <a className="cursor-pointer hover:text-yellow-300 transition">
+            Guru
+          </a>
+
+          <a className="cursor-pointer hover:text-yellow-300 transition">
+            Kontak
+          </a>
         </div>
 
-
-
-        <button
-          className="
-            md:hidden
-            text-3xl
-          "
-        >
+        {/* MOBILE */}
+        <button className="md:hidden text-3xl">
           ☰
         </button>
-
-
 
         <button
           className="
@@ -157,10 +130,7 @@ export default function Navbar() {
         >
           👥 PPDB 2026/2027
         </button>
-
-
       </nav>
-
     </>
   );
 }
