@@ -8,7 +8,7 @@ const footerMenus = [
   { name: "Program", href: "/program" },
   { name: "Galeri", href: "/galeri" },
   { name: "Guru", href: "/guru" },
-  { name: "Kontak & PPDB", href: "/kontak" },
+  { name: "Kontak & PPDB", href: "/ppdb/register" },
 ];
 
 export default function Footer() {

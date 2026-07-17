@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ClassPrograms from "../../components/ClassPrograms";
 
 export const metadata: Metadata = {
   title: "Program Unggulan",
@@ -68,6 +69,8 @@ export default function ProgramPage() {
         </div>
       </section>
 
+      <ClassPrograms title="Kelompok Kelas" subtitle="Kelompok kelas resmi TK Islam Ar Rahmah 48 terdiri dari PAUD, TK A, dan TK B." />
+
 
       {/* CONTENT */}
       <section className="bg-[linear-gradient(180deg,#ffffff_0%,#EEF6F1_42%,#FFF8EC_100%)] py-24">
@@ -121,7 +124,7 @@ export default function ProgramPage() {
           </p>
 
           <Link
-            href="/kontak"
+            href="/ppdb/register"
             className="mt-8 inline-flex bg-green-700 text-white px-8 py-4 rounded-full font-semibold hover:bg-green-800 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2"
           >
             Daftar PPDB

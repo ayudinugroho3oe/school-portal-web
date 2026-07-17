@@ -58,7 +58,7 @@ export default function Hero() {
 
         <div className="hero-ctas grid gap-3 lg:flex lg:flex-row">
           <Link
-            href="/kontak"
+            href="/ppdb/register"
             className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[18px] bg-[linear-gradient(135deg,#0F766E,#10B981)] px-6 py-3 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(16,185,129,0.25)] transition duration-300 ease-out hover:-translate-y-1 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2 sm:text-base"
           >
             <GraduationCap size={18} aria-hidden="true" />
