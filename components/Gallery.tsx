@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Gallery() {
   const images = [
     {
@@ -83,9 +85,11 @@ export default function Gallery() {
 
               <div className="overflow-hidden">
 
-                <img
+                <Image
                   src={image.src}
                   alt={image.title}
+                  width={900}
+                  height={700}
                   className="
                     h-72
                     w-full

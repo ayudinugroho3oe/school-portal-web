@@ -16,8 +16,18 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TK Islam Ar Rahmah 48",
-  description: "Website Resmi TK Islam Ar Rahmah 48",
+  title: {
+    default: "TK Islam Ar Rahmah 48",
+    template: "%s | TK Islam Ar Rahmah 48",
+  },
+  description: "Website resmi TK Islam Ar Rahmah 48, sekolah Islam dengan pembelajaran aktif dan lingkungan ramah anak.",
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    siteName: "TK Islam Ar Rahmah 48",
+    title: "TK Islam Ar Rahmah 48",
+    description: "Sekolah Islam dengan pembelajaran aktif dan lingkungan ramah anak.",
+  },
 };
 
 export default function RootLayout({

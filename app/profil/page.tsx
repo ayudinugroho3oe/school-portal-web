@@ -1,4 +1,10 @@
 import Image from "next/image";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Profil Sekolah",
+  description: "Profil, sejarah, visi, dan misi TK Islam Ar Rahmah 48.",
+};
 
 export default function ProfilPage() {
   return (
@@ -13,7 +19,7 @@ export default function ProfilPage() {
             Profil Sekolah
           </p>
 
-          <h1 className="mt-4 text-5xl font-bold">
+          <h1 className="mt-4 text-4xl font-bold md:text-5xl">
             TK Islam Ar Rahmah 48
           </h1>
 
@@ -39,7 +45,7 @@ export default function ProfilPage() {
               Sejarah
             </p>
 
-            <h2 className="mt-4 text-4xl font-bold text-gray-900">
+            <h2 className="mt-4 text-3xl font-bold text-gray-900 md:text-4xl">
               Tentang TK Islam Ar Rahmah 48
             </h2>
 
@@ -60,7 +66,7 @@ export default function ProfilPage() {
 
             <Image
               src="/sekolah.jpg"
-              alt="Sekolah"
+              alt="Lingkungan TK Islam Ar Rahmah 48"
               fill
               className="object-cover"
             />
@@ -79,7 +85,7 @@ export default function ProfilPage() {
 
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-10">
 
-          <div className="bg-white rounded-3xl p-10 shadow">
+          <div className="bg-white rounded-3xl p-6 shadow sm:p-10">
 
             <h3 className="text-3xl font-bold text-green-700">
               Visi
@@ -97,7 +103,7 @@ export default function ProfilPage() {
 
 
 
-          <div className="bg-white rounded-3xl p-10 shadow">
+          <div className="bg-white rounded-3xl p-6 shadow sm:p-10">
 
             <h3 className="text-3xl font-bold text-green-700">
               Misi
@@ -131,7 +137,7 @@ export default function ProfilPage() {
 
           <div className="w-40 h-40 rounded-full bg-green-100 mx-auto"></div>
 
-          <h2 className="mt-8 text-4xl font-bold">
+          <h2 className="mt-8 text-3xl font-bold md:text-4xl">
             Sambutan Kepala Sekolah
           </h2>
 

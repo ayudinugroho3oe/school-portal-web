@@ -1,4 +1,10 @@
-import Image from "next/image";
+import type { Metadata } from "next";
+import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Program Unggulan",
+  description: "Program pembelajaran unggulan TK Islam Ar Rahmah 48 untuk mengembangkan karakter, kreativitas, dan kecerdasan anak.",
+};
 
 export default function ProgramPage() {
   const programs = [
@@ -45,7 +51,7 @@ export default function ProgramPage() {
             Program Unggulan
           </p>
 
-          <h1 className="mt-4 text-5xl font-bold">
+          <h1 className="mt-4 text-4xl font-bold md:text-5xl">
             Belajar Menjadi Menyenangkan
           </h1>
 
@@ -77,9 +83,9 @@ export default function ProgramPage() {
                   {program.icon}
                 </div>
 
-                <h3 className="mt-6 text-2xl font-bold text-green-800">
+                <h2 className="mt-6 text-2xl font-bold text-green-800">
                   {program.title}
-                </h3>
+                </h2>
 
                 <p className="mt-4 text-gray-600 leading-7">
                   {program.desc}
@@ -101,7 +107,7 @@ export default function ProgramPage() {
 
         <div className="max-w-5xl mx-auto px-6 text-center">
 
-          <h2 className="text-4xl font-bold text-gray-900">
+          <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">
             Siap Bergabung Bersama Kami?
           </h2>
 
@@ -110,9 +116,12 @@ export default function ProgramPage() {
             untuk putra-putri Anda di TK Islam Ar Rahmah 48.
           </p>
 
-          <button className="mt-8 bg-green-700 text-white px-8 py-4 rounded-full font-semibold hover:bg-green-800 transition">
+          <Link
+            href="/kontak"
+            className="mt-8 inline-flex bg-green-700 text-white px-8 py-4 rounded-full font-semibold hover:bg-green-800 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2"
+          >
             Daftar PPDB
-          </button>
+          </Link>
 
         </div>
 

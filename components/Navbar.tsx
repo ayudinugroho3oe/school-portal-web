@@ -35,9 +35,9 @@ export default function Navbar() {
           </div>
 
           <div>
-            <h1 className="text-lg md:text-3xl font-bold text-green-800">
+            <p className="text-lg md:text-3xl font-bold text-green-800">
               TK Islam Ar Rahmah 48
-            </h1>
+            </p>
 
             <p className="text-sm md:text-xl text-gray-500">
               Mendidik Generasi Qurani
@@ -47,13 +47,12 @@ export default function Navbar() {
         </div>
 
         <div className="hidden lg:flex items-center gap-8 text-gray-600">
-          <div>☎️ 08xxxxxxxxxx</div>
-          <div>✉️ info@arrahmah48.sch.id</div>
-          <div>📍 Jakarta</div>
-
-          <div className="text-green-700 text-xl">
-            f ◎ ▶
-          </div>
+          <a
+            href="mailto:info@arrahmah48.sch.id"
+            className="rounded-sm hover:text-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700"
+          >
+            ✉️ info@arrahmah48.sch.id
+          </a>
         </div>
 
       </div>
@@ -74,7 +73,7 @@ export default function Navbar() {
                 <Link
                   key={menu.href}
                   href={menu.href}
-                  className={`pb-3 transition hover:text-yellow-300 ${
+                  className={`rounded-sm pb-3 transition hover:text-yellow-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-300 ${
                     active
                       ? "text-yellow-300 border-b-4 border-yellow-400"
                       : ""
@@ -90,23 +89,30 @@ export default function Navbar() {
 
           {/* Mobile Hamburger */}
           <button
+            type="button"
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden text-4xl"
+            aria-label={menuOpen ? "Tutup menu navigasi" : "Buka menu navigasi"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
+            className="md:hidden rounded-md text-4xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-300"
           >
             ☰
           </button>
 
           {/* PPDB */}
-          <button className="bg-yellow-400 text-green-900 font-bold px-5 py-3 rounded-full text-sm md:text-base hover:bg-yellow-300 transition">
+          <Link
+            href="/kontak"
+            className="bg-yellow-400 text-green-900 font-bold px-5 py-3 rounded-full text-sm md:text-base hover:bg-yellow-300 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          >
             👥 PPDB 2026/2027
-          </button>
+          </Link>
 
         </div>
 
         {/* MOBILE MENU */}
         {menuOpen && (
 
-          <div className="md:hidden bg-green-700 border-t border-green-600">
+          <div id="mobile-navigation" className="md:hidden bg-green-700 border-t border-green-600">
 
             {menus.map((menu) => {
 
@@ -118,7 +124,7 @@ export default function Navbar() {
                   key={menu.href}
                   href={menu.href}
                   onClick={() => setMenuOpen(false)}
-                  className={`block px-6 py-4 border-b border-green-600 ${
+                  className={`block px-6 py-4 border-b border-green-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-yellow-300 ${
                     active
                       ? "bg-green-900 text-yellow-300 font-semibold"
                       : "hover:bg-green-600"

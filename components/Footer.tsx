@@ -1,3 +1,15 @@
+import Image from "next/image";
+import Link from "next/link";
+
+const footerMenus = [
+  { name: "Beranda", href: "/" },
+  { name: "Profil", href: "/profil" },
+  { name: "Program", href: "/program" },
+  { name: "Galeri", href: "/galeri" },
+  { name: "Guru", href: "/guru" },
+  { name: "Kontak & PPDB", href: "/kontak" },
+];
+
 export default function Footer() {
   return (
     <footer className="bg-green-900 text-white">
@@ -8,9 +20,11 @@ export default function Footer() {
 
           <div>
 
-            <img
+            <Image
               src="/logo.png"
               alt="Logo"
+              width={96}
+              height={96}
               className="w-24"
             />
 
@@ -34,15 +48,16 @@ export default function Footer() {
 
             <ul className="mt-5 space-y-3 text-green-100">
 
-              <li>Beranda</li>
-
-              <li>Profil</li>
-
-              <li>Program</li>
-
-              <li>Galeri</li>
-
-              <li>PPDB</li>
+              {footerMenus.map((menu) => (
+                <li key={menu.href}>
+                  <Link
+                    href={menu.href}
+                    className="rounded-sm transition hover:text-yellow-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-300"
+                  >
+                    {menu.name}
+                  </Link>
+                </li>
+              ))}
 
             </ul>
 
@@ -56,11 +71,14 @@ export default function Footer() {
 
             <ul className="mt-5 space-y-3 text-green-100">
 
-              <li>📍 Jakarta</li>
-
-              <li>📞 08xxxxxxxxxx</li>
-
-              <li>✉ info@arrahmah.sch.id</li>
+              <li>
+                <a
+                  href="mailto:info@arrahmah48.sch.id"
+                  className="break-all rounded-sm transition hover:text-yellow-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-300"
+                >
+                  ✉ info@arrahmah48.sch.id
+                </a>
+              </li>
 
             </ul>
 
