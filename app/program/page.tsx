@@ -44,18 +44,22 @@ export default function ProgramPage() {
     <main>
 
       {/* HERO */}
-      <section className="bg-green-700 py-20">
-        <div className="max-w-7xl mx-auto px-6 text-center text-white">
+      <section className="relative overflow-hidden bg-[linear-gradient(135deg,#FCFBF7_0%,#FFF8EC_52%,#EEF6F1_100%)] py-16 md:py-20">
+        <div className="pointer-events-none absolute -left-20 -top-24 h-72 w-72 rounded-full bg-emerald-200/35 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-28 right-[8%] h-72 w-72 rounded-full bg-amber-200/35 blur-3xl" />
+        <div className="pointer-events-none absolute right-[18%] top-12 h-16 w-16 rotate-12 rounded-[22px] border border-indigo-200/70 bg-white/35" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-[linear-gradient(to_bottom,transparent,rgba(255,255,255,0.9))]" />
+        <div className="relative mx-auto max-w-7xl px-6 text-center">
 
-          <p className="uppercase tracking-[0.3em] font-semibold">
+          <p className="inline-flex rounded-full border border-emerald-100 bg-white/80 px-5 py-2 text-sm font-semibold uppercase tracking-[0.28em] text-green-700 shadow-sm backdrop-blur">
             Program Unggulan
           </p>
 
-          <h1 className="mt-4 text-4xl font-bold md:text-5xl">
+          <h1 className="mt-5 text-4xl font-bold tracking-tight text-slate-900 md:text-5xl">
             Belajar Menjadi Menyenangkan
           </h1>
 
-          <p className="mt-6 max-w-3xl mx-auto text-xl text-green-100">
+          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-slate-600 md:text-xl">
             Program pembelajaran yang dirancang untuk
             mengembangkan karakter, kreativitas,
             dan kecerdasan anak secara seimbang.
@@ -66,7 +70,7 @@ export default function ProgramPage() {
 
 
       {/* CONTENT */}
-      <section className="py-24 bg-[#f8fcf9]">
+      <section className="bg-[linear-gradient(180deg,#ffffff_0%,#EEF6F1_42%,#FFF8EC_100%)] py-24">
 
         <div className="max-w-7xl mx-auto px-6">
 
@@ -76,7 +80,7 @@ export default function ProgramPage() {
 
               <div
                 key={program.title}
-                className="bg-white rounded-3xl border border-green-100 p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition"
+                className="rounded-3xl border border-emerald-100/80 bg-white p-8 shadow-[0_12px_30px_rgba(15,81,50,0.07)] transition hover:-translate-y-2 hover:border-amber-200 hover:shadow-[0_20px_44px_rgba(15,81,50,0.13)]"
               >
 
                 <div className="w-20 h-20 rounded-3xl bg-green-100 flex items-center justify-center text-5xl">
@@ -103,7 +107,7 @@ export default function ProgramPage() {
 
 
       {/* CTA */}
-      <section className="py-20 bg-white">
+      <section className="bg-[linear-gradient(180deg,#FFF8EC_0%,#FCFBF7_52%,#EEF6F1_100%)] py-20">
 
         <div className="max-w-5xl mx-auto px-6 text-center">
 

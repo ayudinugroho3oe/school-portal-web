@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function KontakPage() {
   return (
-    <main className="bg-gray-50 min-h-screen py-16">
+    <main className="min-h-screen bg-[linear-gradient(180deg,#EEF6F1_0%,#FFF8EC_48%,#FCFBF7_78%,#EEF6F1_100%)] py-16">
       <div className="max-w-5xl mx-auto px-6">
 
         <div className="text-center mb-12">
@@ -24,7 +24,7 @@ export default function KontakPage() {
 
         <div className="grid md:grid-cols-2 gap-8">
 
-          <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
+          <div className="rounded-3xl border border-emerald-100/70 bg-white p-6 shadow-[0_16px_40px_rgba(15,81,50,0.09)] sm:p-8">
             <h2 className="text-2xl font-semibold text-green-700 mb-6">
               Informasi Sekolah
             </h2>
@@ -48,7 +48,7 @@ export default function KontakPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
+          <div className="rounded-3xl border border-amber-100 bg-white p-6 shadow-[0_16px_40px_rgba(15,81,50,0.09)] sm:p-8">
             <h2 className="text-2xl font-semibold text-green-700 mb-6">
               Kirim Pesan
             </h2>

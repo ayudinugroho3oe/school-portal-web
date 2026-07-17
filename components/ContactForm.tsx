@@ -49,7 +49,7 @@ export default function ContactForm() {
           autoComplete="name"
           required
           disabled={status === "loading"}
-          className="w-full rounded-lg border px-4 py-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 disabled:cursor-not-allowed disabled:opacity-60"
+          className="w-full rounded-xl border border-emerald-100 bg-[#FCFBF7] px-4 py-3 transition focus:border-green-500 focus:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 disabled:cursor-not-allowed disabled:opacity-60"
         />
       </div>
 
@@ -64,7 +64,7 @@ export default function ContactForm() {
           autoComplete="email"
           required
           disabled={status === "loading"}
-          className="w-full rounded-lg border px-4 py-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 disabled:cursor-not-allowed disabled:opacity-60"
+          className="w-full rounded-xl border border-amber-100 bg-[#FFF8EC] px-4 py-3 transition focus:border-green-500 focus:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 disabled:cursor-not-allowed disabled:opacity-60"
         />
       </div>
 
@@ -79,14 +79,14 @@ export default function ContactForm() {
           required
           minLength={10}
           disabled={status === "loading"}
-          className="w-full rounded-lg border px-4 py-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 disabled:cursor-not-allowed disabled:opacity-60"
+          className="w-full rounded-xl border border-indigo-100 bg-[#F3F2F8] px-4 py-3 transition focus:border-green-500 focus:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 disabled:cursor-not-allowed disabled:opacity-60"
         />
       </div>
 
       <button
         type="submit"
         disabled={status === "loading"}
-        className="rounded-lg bg-green-700 px-6 py-3 text-white transition hover:bg-green-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-70"
+        className="rounded-xl bg-[#2F6F55] px-6 py-3 font-semibold text-white shadow-[0_10px_22px_rgba(47,111,85,0.18)] transition hover:-translate-y-0.5 hover:bg-[#285E49] hover:shadow-[0_14px_28px_rgba(47,111,85,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-70"
       >
         {status === "loading" ? "Menyiapkan email..." : "Kirim Pesan"}
       </button>

@@ -2,7 +2,7 @@ import { testimonials } from "../data/testimonials";
 
 export default function Testimonials() {
   return (
-    <section className="bg-gray-50 py-20">
+    <section className="bg-[linear-gradient(180deg,#ECFDF5_0%,#FFFFFF_100%)] py-[120px]">
       <div className="max-w-7xl mx-auto px-6">
 
         <div className="text-center mb-14">
@@ -20,7 +20,7 @@ export default function Testimonials() {
           {testimonials.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-2xl shadow-lg p-8 hover:-translate-y-2 hover:shadow-xl transition"
+              className="rounded-[22px] border border-[#E5E7EB] bg-white p-8 shadow-[0_10px_30px_rgba(15,23,42,0.05)] transition duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_25px_45px_rgba(0,0,0,0.08)]"
             >
               <div className="text-yellow-500 text-xl mb-4">
                 ⭐⭐⭐⭐⭐

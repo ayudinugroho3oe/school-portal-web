@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --brand-deep: #0f766e;
+  --brand: #10b981;
+  --mint: #ecfdf5;
+  --cream: #fffbeb;
+  --coral: #fff7ed;
+  --lavender: #eff6ff;
 }
 
 @theme inline {
@@ -10,17 +16,106 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-green-50: #ecfdf5;
+  --color-green-100: #d1fae5;
+  --color-green-200: #a7f3d0;
+  --color-green-300: #6ee7b7;
+  --color-green-400: #34d399;
+  --color-green-500: #10b981;
+  --color-green-600: #0d9488;
+  --color-green-700: #0f766e;
+  --color-green-800: #115e59;
+  --color-green-900: #134e4a;
+  --color-green-950: #042f2e;
+  --color-amber-300: #fbbf24;
+  --color-amber-400: #f59e0b;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: clip;
+}
+
+::selection {
+  background: #a7f3d0;
+  color: #0f172a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-areas:
+    "title"
+    "visual"
+    "ctas"
+    "description"
+    "features";
+}
+
+.hero-title {
+  grid-area: title;
+}
+
+.hero-visual {
+  grid-area: visual;
+}
+
+.hero-description {
+  grid-area: description;
+  margin-top: 1.5rem;
+}
+
+.hero-ctas {
+  grid-area: ctas;
+  margin-top: 2rem;
+}
+
+.hero-features {
+  grid-area: features;
+  margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    grid-template-areas:
+      "title visual"
+      "description visual"
+      "ctas visual"
+      "features features";
+    column-gap: 2.25rem;
+  }
+
+  .hero-description {
+    margin-top: 0.75rem;
+  }
+
+  .hero-ctas {
+    margin-top: 1.25rem;
+  }
+
+  .hero-features {
+    margin-top: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+    grid-template-areas:
+      "title visual"
+      "description visual"
+      "ctas visual"
+      "features features";
+    column-gap: 3rem;
+  }
 }

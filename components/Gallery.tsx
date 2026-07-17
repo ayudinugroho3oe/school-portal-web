@@ -17,7 +17,7 @@ export default function Gallery() {
   ];
 
   return (
-    <section className="bg-gray-50 py-24">
+    <section className="relative bg-[linear-gradient(180deg,#ECFDF5_0%,#F8FAFC_100%)] py-[120px]">
 
       <div className="max-w-7xl mx-auto px-6">
 
@@ -80,6 +80,7 @@ export default function Gallery() {
                 rounded-3xl
                 shadow-lg
                 bg-white
+                border border-white/80
               "
             >
 

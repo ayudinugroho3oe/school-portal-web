@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function GaleriPage() {
   return (
-    <main className="bg-green-50 min-h-screen py-16">
+    <main className="min-h-screen bg-[linear-gradient(180deg,#EEF6F1_0%,#FFF8EC_48%,#FCFBF7_78%,#EEF6F1_100%)] py-16">
       <div className="max-w-7xl mx-auto px-6">
 
         <div className="text-center">
@@ -36,10 +36,10 @@ export default function GaleriPage() {
 
             <div
               key={item.id}
-              className="bg-white rounded-3xl overflow-hidden shadow-lg hover:-translate-y-2 transition duration-300"
+              className="overflow-hidden rounded-3xl border border-white/80 bg-white shadow-[0_14px_36px_rgba(15,81,50,0.09)] transition duration-300 hover:-translate-y-2 hover:border-amber-200 hover:shadow-[0_22px_46px_rgba(15,81,50,0.14)]"
             >
 
-              <div className="relative h-64 bg-green-100">
+              <div className="relative h-64 bg-[linear-gradient(135deg,#dff4e7,#fff1c9)]">
 
                 <Image
                   src={item.image}

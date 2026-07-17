@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function GuruPage() {
   return (
-    <main className="bg-green-50 min-h-screen py-16">
+    <main className="min-h-screen bg-[linear-gradient(180deg,#EEF6F1_0%,#FFF8EC_48%,#FCFBF7_78%,#EEF6F1_100%)] py-16">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center">
 
@@ -34,10 +34,10 @@ export default function GuruPage() {
 
             <div
               key={teacher.id}
-              className="bg-white rounded-3xl shadow-lg p-6 text-center hover:-translate-y-2 transition"
+              className="rounded-3xl border border-white/80 bg-white p-6 text-center shadow-[0_14px_36px_rgba(15,81,50,0.09)] transition hover:-translate-y-2 hover:border-emerald-200 hover:shadow-[0_22px_46px_rgba(15,81,50,0.14)]"
             >
 
-              <div className="w-28 h-28 rounded-full bg-green-100 mx-auto flex items-center justify-center text-5xl">
+              <div className="mx-auto flex h-28 w-28 items-center justify-center rounded-full bg-[linear-gradient(135deg,#dff5e7,#fff1c9)] text-5xl shadow-inner">
                 👩‍🏫
               </div>
 

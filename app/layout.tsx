@@ -40,7 +40,7 @@ export default function RootLayout({
       lang="id"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-screen bg-white">
+      <body className="min-h-screen bg-[#F8FAFC] text-slate-800">
 
         <Navbar />
 

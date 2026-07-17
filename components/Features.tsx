@@ -23,7 +23,7 @@ export default function Features() {
   ];
 
   return (
-    <section className="bg-[#f8fcf9] py-24">
+    <section className="bg-[#EEF6F1] py-24">
 
       <div className="max-w-7xl mx-auto px-6">
 

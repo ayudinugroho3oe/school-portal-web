@@ -11,19 +11,23 @@ export default function ProfilPage() {
     <main>
 
       {/* HERO */}
-      <section className="bg-green-700 py-20">
+      <section className="relative overflow-hidden bg-[linear-gradient(135deg,#FCFBF7_0%,#FFF8EC_52%,#EEF6F1_100%)] py-16 md:py-20">
+        <div className="pointer-events-none absolute -left-20 -top-24 h-72 w-72 rounded-full bg-emerald-200/35 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-28 right-[8%] h-72 w-72 rounded-full bg-rose-200/30 blur-3xl" />
+        <div className="pointer-events-none absolute right-[18%] top-12 h-16 w-16 rotate-12 rounded-full border border-amber-300/60 bg-white/35" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-[linear-gradient(to_bottom,transparent,rgba(255,255,255,0.9))]" />
 
-        <div className="max-w-7xl mx-auto px-6 text-center text-white">
+        <div className="relative mx-auto max-w-7xl px-6 text-center">
 
-          <p className="uppercase tracking-[0.3em] font-semibold">
+          <p className="inline-flex rounded-full border border-emerald-100 bg-white/80 px-5 py-2 text-sm font-semibold uppercase tracking-[0.28em] text-green-700 shadow-sm backdrop-blur">
             Profil Sekolah
           </p>
 
-          <h1 className="mt-4 text-4xl font-bold md:text-5xl">
+          <h1 className="mt-5 text-4xl font-bold tracking-tight text-slate-900 md:text-5xl">
             TK Islam Ar Rahmah 48
           </h1>
 
-          <p className="mt-6 text-xl text-green-100 max-w-3xl mx-auto">
+          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-slate-600 md:text-xl">
             Membentuk generasi Qurani yang ceria, mandiri,
             berkarakter, dan siap menghadapi masa depan.
           </p>
@@ -35,7 +39,7 @@ export default function ProfilPage() {
 
 
       {/* SEJARAH */}
-      <section className="py-24 bg-white">
+      <section className="bg-[linear-gradient(180deg,#ffffff_0%,#FFF8EC_48%,#EEF6F1_100%)] py-24">
 
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
 
@@ -81,11 +85,11 @@ export default function ProfilPage() {
 
       {/* VISI MISI */}
 
-      <section className="bg-[#f8fcf9] py-24">
+      <section className="bg-[linear-gradient(180deg,#EEF6F1,#FFF8EC)] py-24">
 
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-10">
 
-          <div className="bg-white rounded-3xl p-6 shadow sm:p-10">
+          <div className="rounded-3xl border border-emerald-100/70 bg-white p-6 shadow-[0_16px_40px_rgba(15,81,50,0.08)] sm:p-10">
 
             <h3 className="text-3xl font-bold text-green-700">
               Visi
@@ -103,7 +107,7 @@ export default function ProfilPage() {
 
 
 
-          <div className="bg-white rounded-3xl p-6 shadow sm:p-10">
+          <div className="rounded-3xl border border-amber-100 bg-white p-6 shadow-[0_16px_40px_rgba(15,81,50,0.08)] sm:p-10">
 
             <h3 className="text-3xl font-bold text-green-700">
               Misi
@@ -131,7 +135,7 @@ export default function ProfilPage() {
 
       {/* KEPALA SEKOLAH */}
 
-      <section className="py-24 bg-white">
+      <section className="bg-[linear-gradient(180deg,#FFF8EC_0%,#ffffff_24%,#EEF6F1_100%)] py-24">
 
         <div className="max-w-5xl mx-auto px-6 text-center">
 
