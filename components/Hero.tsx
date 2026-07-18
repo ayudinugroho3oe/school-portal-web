@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, BookOpen, GraduationCap, HeartHandshake, Sparkles, Star, Users } from "lucide-react";
+import HeroCarousel from "./HeroCarousel";
 
 export default function Hero() {
   return (
@@ -33,19 +33,7 @@ export default function Hero() {
           <div className="absolute -inset-5 -z-10 rotate-[-3deg] rounded-[34%_66%_31%_69%/42%_31%_69%_58%] bg-[linear-gradient(135deg,rgba(167,243,208,0.72),rgba(219,234,254,0.66))] blur-[1px] sm:-inset-7" />
           <div className="absolute -bottom-8 -right-5 -z-10 h-36 w-52 rotate-6 rounded-[50%] bg-amber-200/45 blur-xl sm:h-48 sm:w-64" />
           <div className="absolute -left-4 top-[18%] -z-10 h-24 w-24 rounded-full border border-dashed border-teal-400/30 sm:-left-8 sm:h-32 sm:w-32" />
-          <div className="group relative overflow-hidden rounded-[30%_14%_28%_16%/18%_15%_25%_22%] ring-[6px] ring-white/80 shadow-[0_32px_80px_rgba(15,118,110,0.20),0_8px_24px_rgba(15,23,42,0.10)]">
-            <Image
-              src="/sekolah.jpg"
-              alt="Lingkungan belajar TK Islam Ar Rahmah 48"
-              width={900}
-              height={700}
-              preload
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="h-[245px] w-full object-cover object-center transition duration-700 ease-out group-hover:scale-[1.025] sm:h-[360px] md:h-[405px] lg:h-[420px] xl:h-[435px]"
-            />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.12)_0%,transparent_34%,rgba(15,23,42,0.14)_100%)]" />
-            <div className="pointer-events-none absolute inset-x-[12%] top-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent" />
-          </div>
+          <HeroCarousel />
 
           <Sparkles className="absolute -right-2 -top-6 hidden text-amber-400 lg:block" size={36} strokeWidth={1.6} aria-hidden="true" />
         </div>

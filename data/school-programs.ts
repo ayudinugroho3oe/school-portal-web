@@ -36,3 +36,29 @@ export type ClassProgramId = (typeof classPrograms)[number]["id"];
 export function getClassProgram(id: string | undefined) {
   return classPrograms.find((program) => program.id === id);
 }
+
+export interface ClassAlbumImage {
+  src: string;
+  alt: string;
+}
+
+export interface ClassAlbum {
+  title: string;
+  images: ClassAlbumImage[];
+}
+
+const albumSources = ["/sekolah.jpg", "/sekolah2.png", "/sekolah3.png"];
+const albumTitles = ["Lingkungan Belajar", "Kegiatan Bersama", "Kreativitas Anak"];
+
+export const classProgramAlbumsByProgram: Record<string, ClassAlbum[]> = Object.fromEntries(
+  classPrograms.map((program) => [
+    program.id,
+    albumTitles.map((title, albumIndex) => ({
+      title,
+      images: albumSources.map((src, imageIndex) => ({
+        src: albumSources[(imageIndex + albumIndex) % albumSources.length],
+        alt: `${title} program ${program.name} di TK Islam Ar Rahmah 48`,
+      })),
+    })),
+  ]),
+);

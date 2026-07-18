@@ -47,8 +47,9 @@ export default function Programs() {
           {programs.map((program, index) => {
             const Icon = programIcons[index] ?? BookOpen;
             return (
-              <article
+              <Link
                 key={program.id}
+                href={`/program/${program.slug}`}
                 className={`group min-w-0 overflow-hidden rounded-[22px] border border-[#E5E7EB] bg-white shadow-[0_10px_30px_rgba(15,23,42,0.05)] transition duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_25px_45px_rgba(0,0,0,0.08)] ${cardStyles[index]}`}
               >
                 <div className="relative h-20 overflow-hidden sm:h-36 lg:h-40">
@@ -60,15 +61,16 @@ export default function Programs() {
                     className="object-cover transition duration-500 ease-out group-hover:scale-105"
                   />
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/15 via-transparent to-transparent" />
-                  <span className={`absolute bottom-1 left-1 inline-flex h-6 w-6 items-center justify-center rounded-lg shadow-md sm:bottom-3 sm:left-4 sm:h-10 sm:w-10 sm:rounded-xl ${iconStyles[index]}`}>
+                  <span className={`absolute bottom-1 left-1 inline-flex h-6 w-6 items-center justify-center rounded-lg shadow-md transition duration-300 group-hover:scale-[1.07] group-hover:shadow-[0_8px_24px_rgba(15,118,110,0.24)] sm:bottom-3 sm:left-4 sm:h-10 sm:w-10 sm:rounded-xl ${iconStyles[index]}`}>
                     <Icon size={14} className="sm:h-5 sm:w-5" aria-hidden="true" />
                   </span>
                 </div>
                 <div className="p-2 sm:p-4">
                   <h3 className="text-[9px] font-bold leading-3 text-green-950 sm:text-base sm:leading-5">{program.title}</h3>
                   <p className="mt-2 hidden text-xs leading-5 text-slate-500 sm:block">{program.description}</p>
+                  <span className="mt-3 hidden items-center gap-1 text-xs font-bold text-teal-700 sm:inline-flex">Pelajari Program <ArrowRight size={14} aria-hidden="true" /></span>
                 </div>
-              </article>
+              </Link>
             );
           })}
         </div>
