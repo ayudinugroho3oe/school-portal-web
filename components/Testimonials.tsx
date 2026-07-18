@@ -2,10 +2,10 @@ import { testimonials } from "../data/testimonials";
 
 export default function Testimonials() {
   return (
-    <section className="bg-[linear-gradient(180deg,#ECFDF5_0%,#FFFFFF_100%)] py-[120px]">
+    <section className="bg-[linear-gradient(180deg,#ECFDF5_0%,#FFFFFF_100%)] py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-6">
 
-        <div className="text-center mb-14">
+        <div className="mb-8 text-center md:mb-10">
           <h2 className="text-4xl font-bold text-green-700">
             Apa Kata Orang Tua?
           </h2>
@@ -16,7 +16,7 @@ export default function Testimonials() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid gap-5 md:grid-cols-3">
           {testimonials.map((item) => (
             <div
               key={item.id}

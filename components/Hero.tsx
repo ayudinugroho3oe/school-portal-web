@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ArrowRight, BookOpen, GraduationCap, HeartHandshake, Sparkles, Star, Users } from "lucide-react";
 import HeroCarousel from "./HeroCarousel";
+import WhatsAppIcon from "./WhatsAppIcon";
+import { SCHOOL_WHATSAPP_URL } from "../config/school-contact";
 
 export default function Hero() {
   return (
@@ -44,7 +46,7 @@ export default function Hero() {
           </p>
         </div>
 
-        <div className="hero-ctas grid gap-3 lg:flex lg:flex-row">
+        <div className="hero-ctas grid gap-3 lg:flex lg:flex-row lg:flex-wrap">
           <Link
             href="/ppdb/register"
             className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[18px] bg-[linear-gradient(135deg,#0F766E,#10B981)] px-6 py-3 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(16,185,129,0.25)] transition duration-300 ease-out hover:-translate-y-1 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2 sm:text-base"
@@ -53,6 +55,15 @@ export default function Hero() {
             Daftar PPDB 2026/2027
             <ArrowRight size={17} aria-hidden="true" />
           </Link>
+          <a
+            href={SCHOOL_WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[18px] border border-emerald-500 bg-white px-5 py-3 text-sm font-semibold text-emerald-700 shadow-sm transition duration-300 ease-out hover:-translate-y-1 hover:bg-emerald-50 hover:shadow-[0_12px_26px_rgba(16,185,129,0.14)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 sm:text-base"
+          >
+            <WhatsAppIcon className="h-[18px] w-[18px]" />
+            Chat via WhatsApp
+          </a>
           <Link
             href="/program"
             className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[18px] border border-[#0F766E] bg-white px-6 py-3 text-sm font-semibold text-[#0F766E] transition duration-300 ease-out hover:-translate-y-1 hover:bg-[#ECFDF5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2 sm:text-base"

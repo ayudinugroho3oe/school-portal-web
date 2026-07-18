@@ -23,7 +23,7 @@ export default function Features() {
   ];
 
   return (
-    <section className="bg-[#EEF6F1] py-24">
+    <section className="bg-[#EEF6F1] py-16 lg:py-24">
 
       <div className="max-w-7xl mx-auto px-6">
 
@@ -67,11 +67,11 @@ export default function Features() {
 
 
         <div className="
-          mt-16
+          mt-8
           grid
           md:grid-cols-2
           lg:grid-cols-4
-          gap-8
+          gap-5
         ">
 
           {items.map((item) => (

@@ -1,75 +1,27 @@
-import Image from "next/image";
 import type { Metadata } from "next";
-import { galleries } from "../../data/gallery";
+import GalleryExplorer from "../../components/GalleryExplorer";
+import { publishedGalleryAlbums } from "../../data/gallery";
 
 export const metadata: Metadata = {
   title: "Galeri Kegiatan",
-  description: "Galeri kegiatan belajar, bermain, dan pembiasaan Islami di TK Islam Ar Rahmah 48.",
+  description: "Album dokumentasi kegiatan belajar, bermain, berkarya, dan bertumbuh bersama di TK Islam Ar Rahmah 48.",
 };
 
 export default function GaleriPage() {
   return (
-    <main className="min-h-screen bg-[linear-gradient(180deg,#EEF6F1_0%,#FFF8EC_48%,#FCFBF7_78%,#EEF6F1_100%)] py-16">
-      <div className="max-w-7xl mx-auto px-6">
-
-        <div className="text-center">
-
-          <p className="text-green-700 font-semibold uppercase tracking-[0.2em]">
-            Galeri
-          </p>
-
-          <h1 className="mt-3 text-4xl font-extrabold text-green-900">
-            Dokumentasi Kegiatan
-          </h1>
-
-          <p className="mt-5 max-w-2xl mx-auto text-gray-600">
-            Berbagai kegiatan belajar, bermain, dan pembiasaan Islami
-            di TK Islam Ar Rahmah 48.
-          </p>
-
-        </div>
-
-        {galleries.length > 0 ? (
-          <div className="grid gap-8 mt-14 md:grid-cols-2 lg:grid-cols-3">
-
-          {galleries.map((item) => (
-
-            <div
-              key={item.id}
-              className="overflow-hidden rounded-3xl border border-white/80 bg-white shadow-[0_14px_36px_rgba(15,81,50,0.09)] transition duration-300 hover:-translate-y-2 hover:border-amber-200 hover:shadow-[0_22px_46px_rgba(15,81,50,0.14)]"
-            >
-
-              <div className="relative h-64 bg-[linear-gradient(135deg,#dff4e7,#fff1c9)]">
-
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  fill
-                  className="object-cover"
-                />
-
-              </div>
-
-              <div className="p-6">
-
-                <h2 className="text-xl font-bold text-green-800">
-                  {item.title}
-                </h2>
-
-              </div>
-
-            </div>
-
-          ))}
-
+    <main className="overflow-hidden bg-[radial-gradient(circle_at_top_left,#ECFDF5,transparent_34%),radial-gradient(circle_at_top_right,#FEF3C7,transparent_30%),#F8FAFC]">
+      <section className="px-5 pb-10 pt-12 sm:px-6 sm:pb-12 sm:pt-14 lg:pt-16">
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-3xl">
+            <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-teal-700">Dokumentasi Sekolah</p>
+            <h1 className="mt-3 text-4xl font-black tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">Galeri Kegiatan</h1>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">Mengabadikan setiap langkah belajar, bermain, berkarya, dan bertumbuh bersama di TK Islam Ar Rahmah 48.</p>
           </div>
-        ) : (
-          <p className="mt-14 rounded-3xl bg-white p-8 text-center text-gray-600 shadow-sm">
-            Dokumentasi kegiatan belum tersedia.
-          </p>
-        )}
-
-      </div>
+        </div>
+      </section>
+      <section className="px-5 pb-20 sm:px-6 lg:pb-24">
+        <div className="mx-auto max-w-7xl"><GalleryExplorer albums={publishedGalleryAlbums} /></div>
+      </section>
     </main>
   );
 }

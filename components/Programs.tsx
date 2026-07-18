@@ -31,7 +31,7 @@ function ProgramLink({ className = "" }: { className?: string }) {
 
 export default function Programs() {
   return (
-    <section className="bg-[#F8FAFC] py-20 font-sans lg:py-[120px]">
+    <section className="bg-[#F8FAFC] py-16 font-sans lg:py-24">
       <div className="mx-auto max-w-[1320px] px-5 sm:px-6 lg:px-7">
         <div className="flex items-end justify-between gap-6">
           <div>

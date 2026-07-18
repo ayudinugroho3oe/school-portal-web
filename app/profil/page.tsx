@@ -39,9 +39,9 @@ export default function ProfilPage() {
 
 
       {/* SEJARAH */}
-      <section className="bg-[linear-gradient(180deg,#ffffff_0%,#FFF8EC_48%,#EEF6F1_100%)] py-24">
+      <section className="bg-[linear-gradient(180deg,#ffffff_0%,#FFF8EC_48%,#EEF6F1_100%)] py-16 lg:py-24">
 
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-6 lg:grid-cols-2 lg:gap-14">
 
           <div>
 
@@ -53,7 +53,7 @@ export default function ProfilPage() {
               Tentang TK Islam Ar Rahmah 48
             </h2>
 
-            <p className="mt-8 text-gray-600 leading-8">
+            <p className="mt-5 leading-8 text-gray-600">
               TK Islam Ar Rahmah 48 hadir sebagai lembaga pendidikan
               anak usia dini yang berkomitmen memberikan pendidikan
               berkualitas dengan landasan nilai-nilai Islam.
@@ -66,7 +66,7 @@ export default function ProfilPage() {
           </div>
 
 
-          <div className="relative h-[450px] rounded-3xl overflow-hidden shadow-xl">
+          <div className="relative h-72 overflow-hidden rounded-3xl shadow-xl sm:h-96 lg:h-[450px]">
 
             <Image
               src="/sekolah.jpg"
@@ -85,7 +85,7 @@ export default function ProfilPage() {
 
       {/* VISI MISI */}
 
-      <section className="bg-[linear-gradient(180deg,#EEF6F1,#FFF8EC)] py-24">
+      <section className="bg-[linear-gradient(180deg,#EEF6F1,#FFF8EC)] py-16 lg:py-24">
 
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-10">
 
@@ -135,17 +135,17 @@ export default function ProfilPage() {
 
       {/* KEPALA SEKOLAH */}
 
-      <section className="bg-[linear-gradient(180deg,#FFF8EC_0%,#ffffff_24%,#EEF6F1_100%)] py-24">
+      <section className="bg-[linear-gradient(180deg,#FFF8EC_0%,#ffffff_24%,#EEF6F1_100%)] py-16 lg:py-24">
 
         <div className="max-w-5xl mx-auto px-6 text-center">
 
           <div className="w-40 h-40 rounded-full bg-green-100 mx-auto"></div>
 
-          <h2 className="mt-8 text-3xl font-bold md:text-4xl">
+          <h2 className="mt-6 text-3xl font-bold md:text-4xl">
             Sambutan Kepala Sekolah
           </h2>
 
-          <p className="mt-8 text-gray-600 leading-8">
+          <p className="mt-5 leading-8 text-gray-600">
 
             Selamat datang di TK Islam Ar Rahmah 48.
 

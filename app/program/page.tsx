@@ -73,11 +73,11 @@ export default function ProgramPage() {
 
 
       {/* CONTENT */}
-      <section className="bg-[linear-gradient(180deg,#ffffff_0%,#EEF6F1_42%,#FFF8EC_100%)] py-24">
+      <section className="bg-[linear-gradient(180deg,#ffffff_0%,#EEF6F1_42%,#FFF8EC_100%)] py-16 lg:py-24">
 
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="mx-auto max-w-7xl px-6">
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
 
             {programs.map((program) => (
 
@@ -110,7 +110,7 @@ export default function ProgramPage() {
 
 
       {/* CTA */}
-      <section className="bg-[linear-gradient(180deg,#FFF8EC_0%,#FCFBF7_52%,#EEF6F1_100%)] py-20">
+      <section className="bg-[linear-gradient(180deg,#FFF8EC_0%,#FCFBF7_52%,#EEF6F1_100%)] py-16 lg:py-20">
 
         <div className="max-w-5xl mx-auto px-6 text-center">
 

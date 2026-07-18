@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function GuruPage() {
   return (
-    <main className="min-h-screen bg-[linear-gradient(180deg,#EEF6F1_0%,#FFF8EC_48%,#FCFBF7_78%,#EEF6F1_100%)] py-16">
+    <main className="bg-[linear-gradient(180deg,#EEF6F1_0%,#FFF8EC_48%,#FCFBF7_78%,#EEF6F1_100%)] py-14 lg:py-16">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center">
 
@@ -28,7 +28,7 @@ export default function GuruPage() {
         </div>
 
         {teachers.length > 0 ? (
-          <div className="grid gap-8 mt-14 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-8 grid gap-5 md:mt-10 md:grid-cols-2 lg:grid-cols-4">
 
           {teachers.map((teacher) => (
 
@@ -59,7 +59,7 @@ export default function GuruPage() {
 
           </div>
         ) : (
-          <p className="mt-14 rounded-3xl bg-white p-8 text-center text-gray-600 shadow-sm">
+          <p className="mt-8 rounded-3xl bg-white p-6 text-center text-gray-600 shadow-sm md:mt-10">
             Informasi tenaga pendidik belum tersedia.
           </p>
         )}

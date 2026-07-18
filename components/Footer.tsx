@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Clock3, Mail } from "lucide-react";
+import { SCHOOL_CONTACT, SCHOOL_WHATSAPP_URL } from "../config/school-contact";
+import WhatsAppIcon from "./WhatsAppIcon";
 
 const footerMenus = [
   { name: "Beranda", href: "/" },
@@ -13,13 +15,13 @@ const footerMenus = [
 
 export default function Footer() {
   return (
-    <footer className="relative -mt-12 z-10 bg-transparent px-3 pb-3 font-sans sm:-mt-16 sm:px-5 sm:pb-5">
+    <footer className="relative z-10 bg-transparent px-3 pb-3 pt-8 font-sans sm:px-5 sm:pb-5 sm:pt-10">
       <div className="relative mx-auto max-w-[1440px] overflow-hidden rounded-[48px_48px_28px_28px] border border-white/10 bg-[linear-gradient(135deg,#0F172A_0%,#134E4A_100%)] text-white shadow-[0_28px_70px_rgba(15,23,42,0.24)]">
         <div className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(30deg,rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(150deg,rgba(255,255,255,0.35)_1px,transparent_1px)] [background-size:32px_32px]" />
         <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full border-[46px] border-white/[0.05]" />
         <div className="pointer-events-none absolute -bottom-32 left-1/3 h-72 w-72 rounded-full bg-teal-400/10 blur-3xl" />
 
-        <div className="relative grid gap-10 px-7 py-12 sm:px-10 lg:grid-cols-[1.35fr_0.8fr_1fr_0.9fr] lg:px-14 lg:py-14">
+        <div className="relative grid gap-8 px-7 py-10 sm:px-10 lg:grid-cols-[1.35fr_0.8fr_1fr_0.9fr] lg:gap-10 lg:px-14 lg:py-12">
           <div>
             <div className="flex items-center gap-4">
               <span className="relative h-16 w-16 shrink-0 rounded-2xl bg-white/95 p-2 shadow-lg">
@@ -62,6 +64,15 @@ export default function Footer() {
             >
               <Mail size={18} className="mt-0.5 shrink-0" aria-hidden="true" />
               info@arrahmah48.sch.id
+            </a>
+            <a
+              href={SCHOOL_WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/[0.82] transition hover:text-[#F3C969] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F3C969]"
+            >
+              <WhatsAppIcon className="mt-0.5 h-[18px] w-[18px] shrink-0" />
+              <span><span className="block font-semibold text-white">WhatsApp</span>{SCHOOL_CONTACT.whatsappDisplay}</span>
             </a>
           </div>
 
