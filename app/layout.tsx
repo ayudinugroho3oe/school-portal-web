@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import FloatingWhatsApp from "../components/FloatingWhatsApp";
+import { getPublicSchoolContent } from "@/lib/public-school-content";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,11 +32,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const publicContent = await getPublicSchoolContent();
   return (
     <html
       lang="id"
@@ -43,13 +45,13 @@ export default function RootLayout({
     >
       <body className="min-h-screen bg-[#F8FAFC] text-slate-800">
 
-        <Navbar />
+        <Navbar content={publicContent} />
 
         {children}
 
-        <Footer />
+        <Footer content={publicContent} />
 
-        <FloatingWhatsApp />
+        <FloatingWhatsApp whatsapp={publicContent.whatsapp} />
 
       </body>
     </html>

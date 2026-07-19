@@ -1,0 +1,161 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  SUPER_ADMIN
+  SCHOOL_ADMIN
+  STAFF
+  TEACHER
+}
+
+enum SchoolLevel {
+  PAUD_TK
+  TK
+  PAUD
+}
+
+enum OwnershipStatus {
+  PRIVATE
+  PUBLIC
+}
+
+model User {
+  id            String    @id @default(uuid()) @db.Uuid
+  name          String
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  image         String?
+  role          Role      @default(TEACHER)
+  createdAt     DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt     DateTime  @updatedAt @db.Timestamptz(3)
+  sessions      Session[]
+  accounts      Account[]
+
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(uuid()) @db.Uuid
+  expiresAt DateTime @db.Timestamptz(3)
+  token     String   @unique
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+  ipAddress String?
+  userAgent String?
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+model Account {
+  id                    String    @id @default(uuid()) @db.Uuid
+  accountId             String
+  providerId            String
+  userId                String    @db.Uuid
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime? @db.Timestamptz(3)
+  refreshTokenExpiresAt DateTime? @db.Timestamptz(3)
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt             DateTime  @updatedAt @db.Timestamptz(3)
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@unique([providerId, accountId])
+  @@map("accounts")
+}
+
+model Verification {
+  id         String    @id @default(uuid()) @db.Uuid
+  identifier String
+  value      String
+  expiresAt  DateTime  @db.Timestamptz(3)
+  createdAt  DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt  DateTime  @updatedAt @db.Timestamptz(3)
+
+  @@index([identifier])
+  @@map("verifications")
+}
+
+model SchoolSettings {
+  id                      String          @id @default(uuid()) @db.Uuid
+  key                     String          @unique @db.VarChar(50)
+  schoolCode              String          @unique @db.VarChar(20)
+  schoolName              String          @db.VarChar(150)
+  isActive                Boolean         @default(true)
+  shortName               String?         @db.VarChar(50)
+  npsn                    String?         @db.VarChar(8)
+  schoolLevel             SchoolLevel?
+  ownershipStatus         OwnershipStatus?
+  foundationName          String?
+  principalName           String?         @db.VarChar(120)
+  principalPhotoUrl       String?
+  principalWelcome        String?
+  operationalPermitNumber String?
+  accreditation           String?
+  email                   String?
+  phone                   String?         @db.VarChar(15)
+  whatsapp                String?         @db.VarChar(15)
+  websiteUrl              String?
+  addressLine             String?         @db.VarChar(250)
+  village                 String?
+  district                String?
+  city                    String?         @db.VarChar(100)
+  province                String?         @db.VarChar(100)
+  postalCode              String?         @db.VarChar(5)
+  timezone                String          @default("Asia/Jakarta")
+  locale                  String          @default("id-ID")
+  academicYearLabel       String?         @db.VarChar(9)
+  logoUrl                 String?
+  logoDarkUrl             String?
+  faviconUrl              String?
+  heroImageUrl            String?
+  buildingImageUrl        String?
+  schoolMotto             String?
+  history                 String?
+  vision                  String?
+  mission                 String?
+  schoolValues            Json?
+  operatingHours          Json?
+  socialLinks             Json?
+  googleMapsUrl           String?
+  contactInfo             Json?
+  footerContent           Json?
+  ppdbInfo                Json?
+  publicAnnouncements     Json?
+  createdAt               DateTime        @default(now()) @db.Timestamptz(3)
+  updatedAt               DateTime        @updatedAt @db.Timestamptz(3)
+  updatedByUserId         String?         @db.Uuid
+  auditLogs               AuditLog[]
+
+  @@map("school_settings")
+}
+
+model AuditLog {
+  id          String         @id @default(uuid()) @db.Uuid
+  actorUserId String         @db.Uuid
+  action      String
+  entityType  String
+  entityId    String         @db.Uuid
+  beforeData  Json?
+  afterData   Json
+  requestId   String
+  createdAt   DateTime       @default(now()) @db.Timestamptz(3)
+  entity      SchoolSettings @relation(fields: [entityId], references: [id], onDelete: Restrict)
+
+  @@index([entityId, createdAt])
+  @@index([requestId])
+  @@index([actorUserId, createdAt])
+  @@map("audit_logs")
+}

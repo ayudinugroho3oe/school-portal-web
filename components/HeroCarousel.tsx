@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
-const heroImages = [
+const fallbackHeroImages = [
   { src: "/sekolah.jpg", alt: "Kegiatan bermain sambil belajar di TK Islam Ar Rahmah 48", position: "center" },
   { src: "/sekolah2.png", alt: "Kegiatan peserta didik TK Islam Ar Rahmah 48", position: "center" },
   { src: "/sekolah3.png", alt: "Suasana belajar di TK Islam Ar Rahmah 48", position: "center" },
@@ -12,7 +12,9 @@ const heroImages = [
 const AUTO_SLIDE_DELAY = 5000;
 const SWIPE_THRESHOLD = 45;
 
-export default function HeroCarousel() {
+export default function HeroCarousel({ primaryImage, schoolName }: { primaryImage?: string; schoolName?: string }) {
+  const heroImages = [{ ...fallbackHeroImages[0], src: primaryImage || fallbackHeroImages[0].src, alt: `Kegiatan belajar di ${schoolName || "TK Islam Ar Rahmah 48"}` }, ...fallbackHeroImages.slice(1)];
+  const imageCount = heroImages.length;
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const touchStartX = useRef<number | null>(null);
@@ -20,10 +22,10 @@ export default function HeroCarousel() {
   useEffect(() => {
     if (paused) return;
     const timer = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % heroImages.length);
+      setActiveIndex((current) => (current + 1) % imageCount);
     }, AUTO_SLIDE_DELAY);
     return () => window.clearInterval(timer);
-  }, [paused]);
+  }, [paused, imageCount]);
 
   const finishSwipe = (clientX: number) => {
     if (touchStartX.current === null) return;
@@ -61,6 +63,7 @@ export default function HeroCarousel() {
             sizes="(min-width: 1024px) 50vw, 100vw"
             className="object-cover transition-transform duration-[5000ms] ease-out group-hover:scale-[1.018]"
             style={{ objectPosition: image.position }}
+            unoptimized={image.src.startsWith("http")}
           />
         </div>
       ))}

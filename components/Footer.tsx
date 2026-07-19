@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Clock3, Mail } from "lucide-react";
 import { SCHOOL_CONTACT, SCHOOL_WHATSAPP_URL } from "../config/school-contact";
 import WhatsAppIcon from "./WhatsAppIcon";
+import type { PublicSchoolContent } from "@/lib/public-school-content";
 
 const footerMenus = [
   { name: "Beranda", href: "/" },
@@ -13,7 +14,8 @@ const footerMenus = [
   { name: "Kontak & PPDB", href: "/ppdb/register" },
 ];
 
-export default function Footer() {
+export default function Footer({ content }: { content: PublicSchoolContent }) {
+  const whatsappUrl = content.whatsapp ? `https://wa.me/${content.whatsapp}` : SCHOOL_WHATSAPP_URL;
   return (
     <footer className="relative z-10 bg-transparent px-3 pb-3 pt-8 font-sans sm:px-5 sm:pb-5 sm:pt-10">
       <div className="relative mx-auto max-w-[1440px] overflow-hidden rounded-[48px_48px_28px_28px] border border-white/10 bg-[linear-gradient(135deg,#0F172A_0%,#134E4A_100%)] text-white shadow-[0_28px_70px_rgba(15,23,42,0.24)]">
@@ -25,15 +27,15 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-4">
               <span className="relative h-16 w-16 shrink-0 rounded-2xl bg-white/95 p-2 shadow-lg">
-                <Image src="/logo.png" alt="Logo TK Islam Ar Rahmah 48" fill className="object-contain p-1" />
+                <Image src={content.logoUrl} alt={`Logo ${content.schoolName}`} fill sizes="64px" className="object-contain p-1" unoptimized={content.logoUrl.startsWith("http")} />
               </span>
               <div>
-                <p className="text-xl font-extrabold">TK Islam Ar Rahmah 48</p>
-                <p className="mt-1 text-sm text-white/[0.78]">Mendidik Generasi Qurani</p>
+                <p className="text-xl font-extrabold">{content.schoolName}</p>
+                <p className="mt-1 text-sm text-white/[0.78]">{content.tagline}</p>
               </div>
             </div>
             <p className="mt-6 max-w-sm text-sm leading-7 text-white/[0.78]">
-              Membangun Generasi Qurani yang Ceria, Mandiri, dan Berkarakter.
+              {content.motto}
             </p>
             <Link
               href="/kontak"
@@ -59,20 +61,20 @@ export default function Footer() {
           <div>
             <h2 className="text-lg font-bold">Kontak</h2>
             <a
-              href="mailto:info@arrahmah48.sch.id"
+              href={`mailto:${content.email}`}
               className="mt-5 flex items-start gap-3 break-all text-sm leading-6 text-white/[0.82] transition hover:text-[#F3C969] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F3C969]"
             >
               <Mail size={18} className="mt-0.5 shrink-0" aria-hidden="true" />
-              info@arrahmah48.sch.id
+              {content.email}
             </a>
             <a
-              href={SCHOOL_WHATSAPP_URL}
+              href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/[0.82] transition hover:text-[#F3C969] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F3C969]"
             >
               <WhatsAppIcon className="mt-0.5 h-[18px] w-[18px] shrink-0" />
-              <span><span className="block font-semibold text-white">WhatsApp</span>{SCHOOL_CONTACT.whatsappDisplay}</span>
+              <span><span className="block font-semibold text-white">WhatsApp</span>{content.whatsappDisplay || SCHOOL_CONTACT.whatsappDisplay}</span>
             </a>
           </div>
 
@@ -80,13 +82,13 @@ export default function Footer() {
             <h2 className="text-lg font-bold">Jam Operasional</h2>
             <div className="mt-5 flex items-start gap-3 text-sm leading-7 text-white/[0.78]">
               <Clock3 size={18} className="mt-1 shrink-0" aria-hidden="true" />
-              <p>Senin - Jumat<br />07.30 - 15.00 WIB</p>
+              <p className="whitespace-pre-line">{content.operatingHours}</p>
             </div>
           </div>
         </div>
 
         <div className="relative border-t border-white/[0.14] px-7 py-5 text-center text-xs text-white/[0.78] sm:px-10">
-          © 2026 TK Islam Ar Rahmah 48. All Rights Reserved.
+          © 2026 {content.schoolName}. All Rights Reserved.
         </div>
       </div>
     </footer>

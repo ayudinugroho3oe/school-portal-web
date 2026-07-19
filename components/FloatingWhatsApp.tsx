@@ -1,10 +1,11 @@
 import { SCHOOL_WHATSAPP_URL } from "../config/school-contact";
 import WhatsAppIcon from "./WhatsAppIcon";
 
-export default function FloatingWhatsApp() {
+export default function FloatingWhatsApp({ whatsapp }: { whatsapp?: string | null }) {
+  const whatsappUrl = whatsapp ? `https://wa.me/${whatsapp}` : SCHOOL_WHATSAPP_URL;
   return (
     <a
-      href={SCHOOL_WHATSAPP_URL}
+      href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat dengan sekolah melalui WhatsApp"

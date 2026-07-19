@@ -3,8 +3,11 @@ import { ArrowRight, BookOpen, GraduationCap, HeartHandshake, Sparkles, Star, Us
 import HeroCarousel from "./HeroCarousel";
 import WhatsAppIcon from "./WhatsAppIcon";
 import { SCHOOL_WHATSAPP_URL } from "../config/school-contact";
+import { getPublicSchoolContent } from "@/lib/public-school-content";
 
-export default function Hero() {
+export default async function Hero() {
+  const content = await getPublicSchoolContent();
+  const whatsappUrl = content.whatsapp ? `https://wa.me/${content.whatsapp}` : SCHOOL_WHATSAPP_URL;
   return (
     <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top_left,#ECFDF5_0%,transparent_40%),radial-gradient(circle_at_top_right,#DBEAFE_0%,transparent_35%),#FFFFFF]">
       <div className="pointer-events-none absolute -left-28 top-20 h-64 w-64 rounded-full bg-emerald-100/55 blur-3xl" />
@@ -35,14 +38,14 @@ export default function Hero() {
           <div className="absolute -inset-5 -z-10 rotate-[-3deg] rounded-[34%_66%_31%_69%/42%_31%_69%_58%] bg-[linear-gradient(135deg,rgba(167,243,208,0.72),rgba(219,234,254,0.66))] blur-[1px] sm:-inset-7" />
           <div className="absolute -bottom-8 -right-5 -z-10 h-36 w-52 rotate-6 rounded-[50%] bg-amber-200/45 blur-xl sm:h-48 sm:w-64" />
           <div className="absolute -left-4 top-[18%] -z-10 h-24 w-24 rounded-full border border-dashed border-teal-400/30 sm:-left-8 sm:h-32 sm:w-32" />
-          <HeroCarousel />
+          <HeroCarousel primaryImage={content.heroImageUrl} schoolName={content.schoolName} />
 
           <Sparkles className="absolute -right-2 -top-6 hidden text-amber-400 lg:block" size={36} strokeWidth={1.6} aria-hidden="true" />
         </div>
 
         <div className="hero-description hidden md:block">
           <p className="max-w-[430px] text-base leading-7 text-slate-600 md:text-sm md:leading-6 lg:text-sm lg:leading-6">
-            TK Islam Ar Rahmah 48 menghadirkan pendidikan usia dini berbasis nilai-nilai Islam, pembelajaran aktif, serta lingkungan yang aman, nyaman, dan menyenangkan.
+            {content.schoolName} menghadirkan pendidikan usia dini berbasis nilai-nilai Islam, pembelajaran aktif, serta lingkungan yang aman, nyaman, dan menyenangkan.
           </p>
         </div>
 
@@ -56,7 +59,7 @@ export default function Hero() {
             <ArrowRight size={17} aria-hidden="true" />
           </Link>
           <a
-            href={SCHOOL_WHATSAPP_URL}
+            href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[18px] border border-emerald-500 bg-white px-5 py-3 text-sm font-semibold text-emerald-700 shadow-sm transition duration-300 ease-out hover:-translate-y-1 hover:bg-emerald-50 hover:shadow-[0_12px_26px_rgba(16,185,129,0.14)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 sm:text-base"

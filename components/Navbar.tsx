@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
+import type { PublicSchoolContent } from "@/lib/public-school-content";
 
 const menus = [
   { name: "Beranda", href: "/" },
@@ -15,7 +16,7 @@ const menus = [
   { name: "Kontak", href: "/kontak" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ content }: { content: PublicSchoolContent }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -31,14 +32,14 @@ export default function Navbar() {
               className="flex min-w-0 items-center gap-3 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700"
             >
               <span className="relative h-10 w-10 shrink-0 sm:h-11 sm:w-11">
-                <Image src="/logo.png" alt="Logo TK Islam Ar Rahmah 48" fill className="object-contain" preload />
+                <Image src={content.logoUrl} alt={`Logo ${content.schoolName}`} fill sizes="44px" className="object-contain" preload unoptimized={content.logoUrl.startsWith("http")} />
               </span>
               <span className="min-w-0">
                 <span className="block truncate text-sm font-extrabold tracking-tight text-green-800 sm:text-lg">
-                  TK Islam Ar Rahmah 48
+                  {content.schoolName}
                 </span>
                 <span className="block truncate text-xs text-slate-500 sm:text-sm">
-                  Mendidik Generasi Qurani
+                  {content.tagline}
                 </span>
               </span>
             </Link>
