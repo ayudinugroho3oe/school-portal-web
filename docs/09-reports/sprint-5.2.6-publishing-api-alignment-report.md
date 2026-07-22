@@ -1,6 +1,8 @@
 # Sprint 5.2.6 Publishing and API Alignment Report
 
-**Status:** APPROVED — COMPLETE
+**Version:** 1.0
+**Status:** APPROVED — CLOSED
+**Implementation Authority:** COMPLETED FOR SPRINT 5.2.6
 **Scope:** Publishing foundation only
 **Persistence decision:** Approved immutable history plus publication head
 
@@ -64,4 +66,4 @@ The development database is intentionally untouched. Migration and integration e
 - No admin UI, upload workflow, preview session, public-page visual switch, or cleanup of static fallback content is included.
 - Public website UI files are not modified by Sprint 5.2.6.
 - Publication snapshots keep media metadata only; provider URL resolution remains a later approved media concern.
-- No stage, commit, push, merge, deployment, or development-database migration is authorized.
+- Development-database migration and deployment were not performed. Approved repository changes were committed and pushed to `main` as `a9661005823fe6d21077f7b2825f5ade4deaec02` during sprint closure.

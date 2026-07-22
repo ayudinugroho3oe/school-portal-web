@@ -1,6 +1,6 @@
 # Admin CMS System Blueprint
 
-Version: 0.1
+Version: 0.2
 Status: APPROVED
 Implementation Authority: ALLOWED
 Owner: Product Owner
@@ -16,21 +16,24 @@ The model is **One Product Core, Multiple Independent Installations**. TK Islam 
 
 - Public routes: `/`, `/profil`, `/program`, `/program/[slug]`, `/galeri`, `/galeri/[slug]`, `/guru`, `/kontak`, `/ppdb`, `/ppdb/register`.
 - Admin routes: `/admin`, `/admin/login`, `/admin/settings/school`, `/admin/settings/school/setup`.
-- Current API: Better Auth catch-all and `/api/v1/school-settings` read/update/initialize.
+- Current API: Better Auth, School Settings, configuration collections, structured-content working-copy/lifecycle routes, and read-only public publication routes.
+- Current CMS persistence: canonical School, configuration collections, MediaAsset, Program, Teacher Profile, Gallery Album/Item, Testimonial, immutable ContentPublication history, ContentPublicationHead, and ContentAuditEvent.
+- Current admin UI: login, protected shell/dashboard, and School Settings. Content editors and preview UI are not implemented.
 - Dynamic public boundary: navbar, footer, floating WhatsApp, and homepage hero use `SchoolSettings` with local fallback.
 - Remaining content is JSX or TypeScript data. PPDB submission is a client-only prototype.
 
 ## Recommended Publishing Model
 
-Use **Draft → Preview → Publish, without full history**:
+Use **Draft → Preview → Publish with immutable audit history**:
 
 1. Save updates the typed working-copy entity.
 2. Preview reads the working copy for an authenticated user.
-3. Publish performs full validation and atomically upserts `ContentPublication`.
-4. Public resolvers read publication snapshots, falling back to approved static data until migration completes.
-5. Archive marks the entity archived and removes/invalidates its public snapshot.
+3. Publish performs full validation, appends an immutable `ContentPublication`, and creates or moves `ContentPublicationHead` atomically.
+4. Republish always creates the next immutable version; earlier snapshots are never mutated during the normal lifecycle.
+5. Public resolvers read only the head snapshot, falling back to approved static data until migration completes.
+6. Unpublish deletes the head and returns the working copy to `DRAFT`; archive remains a separate working-copy restriction.
 
-This is safer than direct activation and simpler than full revision history. Scheduled publication is deferred. A single draft per entity avoids branching and merge complexity.
+This is safer than direct activation while retaining an audit-grade history. Full history restoration UI and scheduled publication are deferred. A single working copy per entity avoids branching and merge complexity.
 
 ## Admin Information Architecture
 

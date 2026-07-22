@@ -1,8 +1,8 @@
 # Sprint 5.2.3 Configuration Domain Report
 
-Version: 0.1
-Status: IMPLEMENTED — NEEDS PRODUCT OWNER REVIEW
-Implementation Authority: Sprint 5.2.3 only
+Version: 1.0
+Status: APPROVED — CLOSED
+Implementation Authority: COMPLETED FOR SPRINT 5.2.3
 Owner: Product Owner
 Date: 2026-07-20
 
@@ -82,3 +82,9 @@ Coverage includes domain validation, explicit role grants, authorization-before-
 ## Deferred Scope
 
 Publishing, preview, drafts, media, homepage sections, navigation, footer rendering, taxonomy, program, teacher, gallery, testimonial, CMS UI, cache framework, generalized audit, SchoolMembership, tenant switching, and Sprint 5.2.4 remain unimplemented.
+
+This deferred-scope statement records the historical Sprint 5.2.3 checkpoint. Media, structured content, and publishing foundations were subsequently implemented in Sprint 5.2.4–5.2.6; preview, homepage/navigation/footer, CMS editors, taxonomy, and broader audit UI remain deferred.
+
+## Closure
+
+Sprint 5.2.3 was approved and closed by Product Owner.

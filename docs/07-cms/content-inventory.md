@@ -1,6 +1,6 @@
 # CMS Content Inventory
 
-Version: 0.1
+Version: 0.2
 Status: APPROVED
 Implementation Authority: ALLOWED
 Owner: Product Owner
@@ -8,7 +8,7 @@ Date: 2026-07-20
 
 ## Repository Snapshot
 
-Sprint 4.3 foundation commit is `7e97c6b52948e7567b74605bee1769e26d6698f7` on `main`. The working tree contains pre-existing public UI changes in 16 files. They are user-owned and must not be reset, stashed, overwritten, or attributed to Sprint 5.1.
+The repository checkpoint after Sprint 5.2.6 is commit `a9661005823fe6d21077f7b2825f5ade4deaec02` on `main`. The working tree still contains pre-existing public UI changes in 16 files. They are user-owned and must not be reset, stashed, overwritten, or attributed to CMS milestones.
 
 The current repository is pilot-oriented and uses `PRIMARY_SCHOOL` plus Ar Rahmah-specific fallback content. Sprint 5 treats these values as this installation's migration/seed input, not product-core defaults for every school. New installations use the same source/schema/migrations and receive different database, storage, domain, environment, users, branding, configuration, and content. CMS records retain `schoolId`; no SchoolMembership or shared-database tenant router is required initially.
 
@@ -131,19 +131,19 @@ Five-step client prototype with program selection, student/parent fields, docume
 
 - Better Auth email/password, Prisma adapter, UUID generation.
 - Roles: `SUPER_ADMIN`, `SCHOOL_ADMIN`, `STAFF`, `TEACHER`.
-- Current permissions only cover initialize/read/update School Settings.
+- Runtime permissions cover School Settings, configuration collections, media, and Program/Teacher/Gallery/Testimonial working-copy and lifecycle actions. Sprint 5.3 identity/homepage/profile/contact/navigation/footer and preview permissions remain documented but unimplemented.
 - Admin shell currently links Ringkasan and Identitas Sekolah.
 - School Settings form supports typed identity/contact/brand fields, with several JSON fields not represented in the form.
-- APIs: auth catch-all and School Settings GET/PATCH/initialize POST.
+- APIs: auth and School Settings; configuration collection CRUD/order; structured-content working-copy CRUD/order; publish/unpublish/status; and public published-snapshot reads.
 - Optimistic concurrency via `expectedUpdatedAt`; successful changes are audited transactionally.
 
 ## Prisma Inventory
 
-Current models: User, Session, Account, Verification, SchoolSettings, AuditLog. SchoolSettings holds both technical identity and many nullable future content fields/JSON and currently behaves as one installation singleton. There are no Program, Teacher, Gallery, Testimonial, Media, Publication, Navigation, configuration collection, or PPDB-content entities yet. That is a CMS capability gap, not a requirement for shared-database multi-tenancy.
+Current models include authentication, canonical School, SchoolSettings compatibility, AuditLog, ContactChannel, SocialLink, CallToAction, MediaAsset, Program, TeacherProfile, GalleryAlbum/GalleryItem, Testimonial, immutable ContentPublication history, ContentPublicationHead, and ContentAuditEvent. Homepage/Profile/Contact/PPDB/Navigation/Footer-specific entities, taxonomy, MediaUsage, and preview-session persistence remain absent.
 
 ## Reusable Deployment Gap
 
-The repository already provides one codebase, schema, migration history, and test suite, but repeatable school provisioning is not yet documented as an executable runbook. Sprint 5.2 must keep CMS schema/configuration school-neutral and add idempotent single-School initialization boundaries. It must not add copied school apps, school branches, custom schemas, tenant switching, centralized identity, control plane, billing, or cross-school analytics.
+The repository provides one codebase, schema, migration history, test suite, migration rehearsal, and School-root provisioning/runbook. New installations still require environment-specific operational provisioning, secrets, database, storage, and domain setup. The product must not add copied school apps, school branches, custom schemas, tenant switching, centralized identity, control plane, billing, or cross-school analytics without later approval.
 
 ## Test Inventory
 
@@ -151,7 +151,16 @@ The repository already provides one codebase, schema, migration history, and tes
 - PostgreSQL integration: initialization, permissions, audit, concurrency, rollback.
 - E2E admin: login, protection, settings read/update/conflict/restore, logout.
 - E2E public: `/`, `/profil`, `/program`, `/galeri`, `/guru`, `/kontak` render.
-- Missing CMS tests: publish/preview, media, CRUD/order/archive, API contracts, fallback per migrated domain, mobile admin, and public content assertions.
+- Implemented tests cover CMS context, validation, permissions, configuration CRUD/order, media foundation, structured content, immutable publish/republish/unpublish, public snapshot APIs, migration rehearsal, admin authentication, and existing public-route rendering.
+- Remaining test gaps follow unimplemented scope: preview authorization, Sprint 5.3 backfill/resolvers/editors, media HTTP upload, mobile admin editors, consent, and visual-equivalence baselines.
+
+## Repository Capability Checkpoint after Sprint 5.2.6
+
+- Implemented independent publication roots: Program, Teacher Profile, Gallery Album, Testimonial.
+- Gallery Album snapshots embed active ordered Gallery Items; Gallery Item has no independent publication head.
+- Public APIs read only ContentPublicationHead snapshots.
+- Public pages still use existing SchoolSettings/static fallback and are not switched to the structured publication APIs.
+- Admin content editors and preview sessions remain unimplemented.
 
 ## Migration Priority
 

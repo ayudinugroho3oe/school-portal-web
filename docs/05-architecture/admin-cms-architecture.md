@@ -1,6 +1,6 @@
 # Admin CMS Architecture
 
-Version: 0.1
+Version: 0.2
 Status: APPROVED
 Implementation Authority: ALLOWED
 Owner: Product Owner
@@ -57,7 +57,7 @@ Routes handle HTTP only. Services own transactions, concurrency, audit, and cach
 
 - **Admin working-copy resolver**: authenticated, uncached, includes status and concurrency token.
 - **Preview resolver**: authenticated and scoped by short-lived preview session; renders working-copy DTO.
-- **Public resolver**: reads the publication snapshot; falls back to current static content until that domain is migrated.
+- **Public resolver**: reads only the immutable snapshot referenced by `ContentPublicationHead`; falls back to current static content until that domain is migrated.
 
 The fallback is domain-specific. A database error must not silently expose drafts; it returns the approved static fallback or the previous publication.
 
@@ -70,9 +70,14 @@ The fallback is domain-specific. A database error must not silently expose draft
 3. Match `updatedAt`.
 4. Run strict publish schema and cross-entity checks.
 5. Serialize allowlisted public DTO only.
-6. Upsert ContentPublication.
-7. Write audit record in the same transaction.
-8. Commit, then invalidate affected public cache tags.
+6. Determine the next version and insert immutable ContentPublication history.
+7. Create or move the same-School/type/entity ContentPublicationHead.
+8. Transition the working copy to `PUBLISHED` and write `PUBLISH` or `REPUBLISH` audit data in the same transaction.
+9. Commit, then invalidate affected public cache tags.
+
+`unpublish` validates ownership, active head, and concurrency; deletes the head; returns the working copy to `DRAFT`; and writes `UNPUBLISH` audit data atomically. It never deletes or modifies publication history.
+
+Gallery Album is the publication aggregate root. Its deterministic snapshot embeds active ordered Gallery Items and allowlisted media metadata. Gallery Item has no independent publication head or public mutable join.
 
 Publication failure leaves the previous public snapshot unchanged.
 

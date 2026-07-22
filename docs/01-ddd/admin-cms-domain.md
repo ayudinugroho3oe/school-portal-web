@@ -1,6 +1,6 @@
 # Admin CMS Domain
 
-Version: 0.1
+Version: 0.2
 Status: APPROVED
 Implementation Authority: ALLOWED
 Owner: Product Owner
@@ -15,9 +15,12 @@ The public website remains a separate presentation boundary. CMS publication may
 ## Ubiquitous Language
 
 - **Working copy**: the latest admin-edited typed entity; it is not automatically public.
-- **Publication**: the last immutable public snapshot of a CMS entity.
-- **Publish**: atomically validate a working copy and replace its public snapshot.
-- **Archive**: remove content from public discovery while retaining it for audit and possible restoration.
+- **Publication**: one immutable, versioned public snapshot in the retained history of a CMS aggregate.
+- **Publication head**: the single School-scoped pointer identifying which immutable snapshot is currently public.
+- **Publish**: atomically validate a working copy, append a new immutable snapshot, and move its publication head.
+- **Republish**: publish a changed working copy as a new immutable version without altering earlier snapshots.
+- **Unpublish**: remove the publication head and return the working copy to `DRAFT` without deleting publication history.
+- **Archive**: mark a working aggregate unavailable for ordinary publication until restored; it is distinct from unpublish.
 - **Media asset**: metadata and a storage reference; never image binary stored in PostgreSQL.
 - **Technical identity**: stable school identifiers and security-sensitive configuration.
 - **Public content**: editable copy and media displayed on the public website.
@@ -83,7 +86,7 @@ Owns media metadata, storage provider/key, URL resolution, MIME type, size, dime
 
 ### 12. Publishing and Audit
 
-Coordinates preview, validation, atomic publication snapshots, archival, optimistic concurrency, and audit events across CMS contexts. It does not provide full historical restoration in the pilot.
+Coordinates preview, validation, immutable publication snapshots, current publication heads, unpublish, archival, optimistic concurrency, and audit events across CMS contexts. It retains history but does not provide a full historical restoration UI in the pilot.
 
 ## Aggregate Rules
 
@@ -91,8 +94,8 @@ Coordinates preview, validation, atomic publication snapshots, archival, optimis
 - Mutable commands require `expectedUpdatedAt`.
 - Public list entities use unique slug per school and explicit integer ordering.
 - A working copy may be incomplete; publication must pass the full publish schema.
-- Public reads use only the latest publication snapshot and never an unpublished working copy.
-- A publish/archive/delete command writes an audit record in the same transaction.
+- Public reads use only the snapshot referenced by `ContentPublicationHead` and never an unpublished working copy.
+- Publish, republish, and unpublish write a `ContentAuditEvent` in the same transaction; other material CMS mutations follow their approved audit contract.
 - Hard delete is restricted to never-published, unreferenced content. Published content uses archive/soft delete.
 - Media deletion is blocked while referenced by a working copy or publication.
 - `schoolId` is explicit in content relations, publications, media, audit, cache tags, and unique constraints even though the initial installation contains one School.
@@ -116,7 +119,13 @@ Audit retention remains unlimited. Audit payloads must exclude passwords, sessio
 
 ## Publishing Decision
 
-Use a simplified Draft → Preview → Publish model. Typed tables contain the latest working copy. A generic `ContentPublication` stores only the current published JSON snapshot per entity; publishing replaces that snapshot atomically. There is no full version-history UI, scheduled publishing, or multi-stage approval in the pilot. Audit logs retain who changed or published content.
+Use a simplified Draft → Preview → Publish model. Typed tables contain the latest working copy. `ContentPublication` appends immutable, monotonically versioned JSON snapshots, while `ContentPublicationHead` stores the one current-public pointer per School/type/entity. Republish inserts history and moves the head. Unpublish deletes the head, returns the working copy to `DRAFT`, and preserves history. There is no full history-restoration UI, scheduled publishing, or multi-stage approval in the pilot.
+
+Independent publication roots implemented in Sprint 5.2.6 are Program, Teacher Profile, Gallery Album, and Testimonial. Gallery Album is the gallery aggregate root: its snapshot embeds active Gallery Items in deterministic order. Gallery Item is a working record and never owns a publication head.
+
+## Repository Checkpoint after Sprint 5.2.6
+
+The canonical School/CMS context, configuration collections, MediaAsset foundation, structured working-copy repositories, immutable publication history/head, publish/republish/unpublish transactions, audit events, CMS structured-content routes, and public snapshot routes are implemented. Preview sessions, Admin CMS editors, homepage/profile/contact/navigation/footer entities, media HTTP upload flow, and public visual resolver migration remain future authorized milestones.
 
 ## Invariants
 

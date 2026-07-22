@@ -1,6 +1,6 @@
 # Admin CMS Product Requirements Document
 
-Version: 0.1
+Version: 0.2
 Status: APPROVED
 Implementation Authority: ALLOWED
 Owner: Product Owner
@@ -106,11 +106,14 @@ Show a low-emphasis `Masuk` link in desktop navbar and mobile menu. Anonymous de
 ## Publishing Requirements
 
 - Model: Draft → Preview → Publish.
-- One working copy and one current publication snapshot per entity.
+- One working copy, immutable versioned publication history, and at most one current `ContentPublicationHead` per School/type/entity.
 - No scheduled publishing or complete version-history UI.
-- Publication is atomic with audit creation.
+- Publish/republish append history, move the head, update lifecycle, and create audit data atomically.
+- Unpublish removes the head, returns the working copy to `DRAFT`, preserves history, and creates audit data atomically.
 - Archive is reversible; hard delete is limited to unreferenced, never-published drafts.
 - `hasUnpublishedChanges` is visible in list and edit views.
+
+For galleries, Gallery Album is the publication root. Its immutable snapshot contains active Gallery Items in deterministic order. Gallery Item is not independently publishable.
 
 ## Content Validation Limits
 

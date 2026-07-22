@@ -1,6 +1,6 @@
 # Admin CMS API Contract
 
-Version: 0.1
+Version: 0.2
 Status: APPROVED
 Implementation Authority: ALLOWED
 Owner: Product Owner
@@ -57,6 +57,8 @@ School Admin has approved publish authority within the installation. No tenant-c
 
 ## Endpoint Summary
 
+Implementation checkpoint: Sprint 5.2.6 currently exposes configuration collection APIs, structured-content working-copy APIs, publish/unpublish/status routes, and read-only public snapshot routes. Identity/homepage/profile/contact/navigation/footer, preview-session, and media HTTP routes below are approved roadmap contracts but are not yet implemented. The canonical structured-content alignment later in this document supersedes older field/lifecycle shorthand.
+
 ### School Identity
 
 | Method | Route | Permission | Purpose |
@@ -70,7 +72,7 @@ Technical fields such as `schoolCode`, key, role rules, and auth configuration a
 
 ### Tenant-Singleton Content
 
-The same shape applies to `homepage`, `profile`, `contact`, `ppdb`, and `footer`:
+The following planned shape applies to `homepage`, `profile`, `contact`, `ppdb`, and `footer` after their authorized implementation milestone:
 
 | Method | Route | Purpose |
 | --- | --- | --- |
@@ -78,17 +80,20 @@ The same shape applies to `homepage`, `profile`, `contact`, `ppdb`, and `footer`
 | PATCH | `/api/v1/cms/{domain}` | Save working copy |
 | POST | `/api/v1/cms/{domain}/preview` | Issue short-lived preview context |
 | POST | `/api/v1/cms/{domain}/publish` | Validate and publish atomically |
-| POST | `/api/v1/cms/{domain}/archive` | Archive public snapshot where allowed |
+| POST | `/api/v1/cms/{domain}/unpublish` | Remove the current head while preserving immutable history |
 
 PATCH body contains domain fields plus `expectedUpdatedAt`. Publish body contains `expectedUpdatedAt`. Response includes `status`, `updatedAt`, `publishedAt`, and `hasUnpublishedChanges`. Singleton means one row per School, never one global row.
 
 ### Configuration Collections
 
-Configuration-first resources use the standard list/detail/create/update/archive/order pattern:
+Configuration-first resources use the standard list/detail/create/update/active-state/order pattern. Implemented Sprint 5.2.3 resources are:
 
 - `/api/v1/cms/contact-channels`
 - `/api/v1/cms/social-links`
 - `/api/v1/cms/ctas`
+
+Planned resources for their later milestones are:
+
 - `/api/v1/cms/taxonomies/{namespace}/terms`
 - `/api/v1/cms/homepage/sections`
 - `/api/v1/cms/footer/columns`
@@ -108,17 +113,19 @@ Sprint 5.2.3 authorization is explicit: all three collection GET operations requ
 | POST | `/api/v1/cms/programs` | `cms.program.create` |
 | GET | `/api/v1/cms/programs/{id}` | `cms.program.view` |
 | PATCH | `/api/v1/cms/programs/{id}` | `cms.program.edit` |
-| POST | `/api/v1/cms/programs/{id}/preview` | `cms.program.view` |
+| POST | `/api/v1/cms/programs/{id}/preview` | `cms.program.view` (planned) |
 | POST | `/api/v1/cms/programs/{id}/publish` | `cms.program.publish` |
-| POST | `/api/v1/cms/programs/{id}/archive` | `cms.program.archive` |
-| DELETE | `/api/v1/cms/programs/{id}` | `cms.program.delete` |
+| POST | `/api/v1/cms/programs/{id}/unpublish` | `cms.program.archive` |
+| GET | `/api/v1/cms/programs/{id}/publication-status` | `cms.program.view` |
+| POST | `/api/v1/cms/programs/{id}/archive` | `cms.program.archive` (planned working-copy lifecycle route) |
+| DELETE | `/api/v1/cms/programs/{id}` | `cms.program.delete` (planned eligible hard delete) |
 | PUT | `/api/v1/cms/programs/order` | `cms.program.reorder` |
 
-Create/update schema: `name` 1–120, slug 2–120 kebab-case, summary ≤300, description ≤10,000, each structured list item 1–300, maximum 30 items per list, valid School-owned category UUID, media UUID nullable, nonnegative order, booleans. Program category is configuration data, not a PAUD/TK-specific enum. DELETE works only for never-published, unreferenced drafts.
+Current create/update schema uses `code`, `title`, `slug`, `summary`, `description`, optional `featuredMediaId`, `sortOrder`, and `isActive`, as defined in the canonical alignment below. Category, repeatable lists, and eligible hard delete remain planned additive contracts.
 
 ### Teachers and Testimonials
 
-Use standard list/detail/create/update/publish/archive/delete/order routes:
+Current Teacher and Testimonial routes use list/detail/create/update/order plus publish/unpublish/publication-status. Preview, explicit archive route, and eligible hard delete remain planned:
 
 - `/api/v1/cms/teachers`
 - `/api/v1/cms/testimonials`
@@ -130,17 +137,21 @@ Teacher name ≤120, position ≤120, education ≤200, bio ≤2,000. Testimonia
 | Method | Route | Purpose |
 | --- | --- | --- |
 | GET/POST | `/api/v1/cms/galleries` | List/create albums |
-| GET/PATCH/DELETE | `/api/v1/cms/galleries/{id}` | Album detail/mutation |
+| GET/PATCH | `/api/v1/cms/galleries/{id}` | Album detail/mutation |
+| DELETE | `/api/v1/cms/galleries/{id}` | Eligible hard delete (planned) |
 | POST | `/api/v1/cms/galleries/{id}/items` | Attach media item |
-| PATCH/DELETE | `/api/v1/cms/galleries/{id}/items/{itemId}` | Caption/order/remove |
+| PATCH | `/api/v1/cms/galleries/{id}/items/{itemId}` | Caption/update working item |
+| DELETE | `/api/v1/cms/galleries/{id}/items/{itemId}` | Remove item (planned) |
 | PUT | `/api/v1/cms/galleries/{id}/items/order` | Reorder all items |
-| POST | `/api/v1/cms/galleries/{id}/preview` | Preview album |
+| POST | `/api/v1/cms/galleries/{id}/preview` | Preview album (planned) |
 | POST | `/api/v1/cms/galleries/{id}/publish` | Publish album snapshot |
-| POST | `/api/v1/cms/galleries/{id}/archive` | Archive album |
+| POST | `/api/v1/cms/galleries/{id}/unpublish` | Remove album head and preserve history |
+| GET | `/api/v1/cms/galleries/{id}/publication-status` | Read lifecycle/head status |
+| POST | `/api/v1/cms/galleries/{id}/archive` | Archive working album (planned route) |
 
-Album title ≤150, description ≤2,000, event date required for publish, optional School-owned category term, 1–100 ready images for publish, meaningful alt text required. Gallery categories and album counts are not fixed.
+Current album fields and publish validation follow the canonical alignment below. Event date, taxonomy, expanded item-count rules, and additional alt-text policy gates remain planned additions; gallery categories and album counts are not fixed product enums.
 
-### Navigation
+### Navigation (planned Sprint 5.3 contract)
 
 - `GET/POST /api/v1/cms/navigation`
 - `PATCH/DELETE /api/v1/cms/navigation/{id}`
@@ -152,7 +163,7 @@ Label ≤40. Internal href must begin with `/` and be allowlisted; external link
 
 Navigation locations are validated configuration codes rather than a closed database enum. Footer columns/links and reusable CTAs use their configuration collection APIs above.
 
-### Media
+### Media (planned HTTP contract; foundation service exists)
 
 | Method | Route | Purpose |
 | --- | --- | --- |

@@ -1,6 +1,6 @@
 # Admin CMS Implementation Plan
 
-Version: 0.1
+Version: 0.2
 Status: APPROVED
 Implementation Authority: ALLOWED
 Owner: Product Owner
@@ -38,6 +38,8 @@ Exit: all documents become approved and implementation authority is explicitly g
 
 Quality gates: Prisma validate/generate, empty-test migration, migration from current schema, unit permission/validation/service tests, PostgreSQL integration, API tests, admin shell E2E, existing public regression/build/lint/typecheck.
 
+**Closure:** APPROVED and CLOSED through Sprint 5.2.6. Implemented sub-milestones cover the canonical School root, shared CMS foundation, configuration collections, media foundation, structured content, immutable publication history/head, publishing audit, structured-content CMS APIs, and public snapshot APIs. Preview sessions, full Admin CMS editors, homepage/profile/contact/navigation/footer persistence, media HTTP upload, and public visual resolver migration were not implemented and remain assigned to their relevant later roadmap milestones.
+
 ### Sprint 5.3 — Identity, Homepage, Profile, Navigation and Footer
 
 - Build admin editors and APIs for public identity, homepage, profile, contact, navigation, and footer.
@@ -62,7 +64,7 @@ Quality gates include slug uniqueness, route generation/resolution, ordering, ar
 ### Sprint 5.5 — Gallery and Media
 
 - Implement media library UI and validated upload flow.
-- Implement GalleryAlbum/GalleryItem CRUD, ordering, captions, alt text, cover selection, preview, publish, and archive.
+- Implement GalleryAlbum/GalleryItem CRUD, ordering, captions, alt text, cover selection, preview, and album-level publish/unpublish/archive. Gallery Item remains a working child and is never an independent publication root.
 - Keep the approved local adapter for development; add the approved Vercel Blob production adapter only after environment/security provisioning approval.
 - Migrate existing gallery metadata without copying placeholder duplicates as distinct real assets unnecessarily.
 
@@ -165,7 +167,7 @@ Quality gates include open/closed rendering, class choices, no applicant persist
 
 1. One Product Core, Multiple Independent Installations.
 2. Configuration over Hardcode for all new designs.
-3. Draft → Preview → Publish with one current publication snapshot.
+3. Draft → Preview → Publish with immutable ContentPublication history and one current ContentPublicationHead pointer.
 4. School Admin may publish within the installation.
 5. No rich HTML editor in the pilot.
 6. Media binary is never stored in PostgreSQL.

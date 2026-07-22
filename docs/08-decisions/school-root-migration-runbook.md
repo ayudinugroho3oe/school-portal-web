@@ -1,8 +1,8 @@
 # School Root Migration and Recovery Runbook
 
-Version: 0.1
-Status: IMPLEMENTED — NEEDS CHECKPOINT REVIEW
-Implementation Authority: Sprint 5.2.1 only
+Version: 1.0
+Status: APPROVED — CLOSED
+Implementation Authority: COMPLETED FOR SPRINT 5.2.1
 Owner: Product Owner
 Date: 2026-07-20
 

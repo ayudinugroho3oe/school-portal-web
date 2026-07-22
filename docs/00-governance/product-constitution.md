@@ -1,7 +1,7 @@
 # Product Constitution
 
 Title: Product Constitution
-Version: 1.0
+Version: 1.1
 Status: APPROVED
 Implementation Authority: ALLOWED
 Owner: Product Owner
@@ -87,7 +87,7 @@ The current phase must not build:
 - a rich HTML editor;
 - multi-level approval chains;
 - scheduled publishing;
-- complete version history;
+- a complete version-history restoration UI (immutable publication history required for audit is retained);
 - a plugin marketplace;
 - a control plane;
 - centralized billing or fleet analytics;
@@ -300,3 +300,4 @@ Every major sprint review should record:
 | Version | Date | Amendment |
 | --- | --- | --- |
 | 1.0 | 2026-07-20 | Initial Product Constitution established after Sprint 5.1 Product-First Architecture Correction. |
+| 1.1 | 2026-07-23 | Clarified that the product retains immutable publication history for audit while full history restoration UI remains out of scope. Approved through Milestone 5.2.7 Repository Alignment. |

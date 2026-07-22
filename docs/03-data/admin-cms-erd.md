@@ -1,6 +1,6 @@
 # Admin CMS Conceptual ERD
 
-Version: 0.1
+Version: 0.2
 Status: APPROVED
 Implementation Authority: ALLOWED
 Owner: Product Owner
@@ -8,7 +8,7 @@ Date: 2026-07-20
 
 ## Scope
 
-This is a conceptual proposal only. It does not authorize a Prisma schema change or migration. One canonical product schema and migration history are reused by many independent single-School installations; TK Islam Ar Rahmah 48 is the pilot installation. All primary entities use PostgreSQL UUIDs, retain `schoolId` for domain clarity/portability, and use `timestamptz` interpreted through the installation School timezone.
+This is the living conceptual ERD aligned with the repository after Sprint 5.2.6. It documents both implemented foundations and planned later aggregates; it does not itself authorize another Prisma change or migration. One canonical schema and migration history are reused by independent single-School installations.
 
 ## Relationship Diagram
 
@@ -36,6 +36,9 @@ erDiagram
   SCHOOL ||--o{ MEDIA_ASSET : owns
   MEDIA_ASSET ||--o{ MEDIA_USAGE : referenced_by
   SCHOOL ||--o{ CONTENT_PUBLICATION : publishes
+  SCHOOL ||--o{ CONTENT_PUBLICATION_HEAD : exposes
+  CONTENT_PUBLICATION ||--o| CONTENT_PUBLICATION_HEAD : current_for
+  SCHOOL ||--o{ CONTENT_AUDIT_EVENT : records
   USER ||--o{ AUDIT_LOG : acts
 ```
 
@@ -43,7 +46,7 @@ erDiagram
 
 ## Common Fields
 
-Every editable entity contains:
+The target convention for fully evolved editable aggregates is:
 
 - `id UUID PK`
 - `schoolId UUID FK`
@@ -54,7 +57,7 @@ Every editable entity contains:
 - `archivedAt timestamptz nullable`
 - `archivedByUserId UUID nullable`
 
-List content additionally contains `slug varchar`, `sortOrder integer`, and `isVisible boolean`. Slug uniqueness is scoped to school and entity type.
+Implemented Sprint 5.2 foundations use the approved minimum fields for each aggregate and do not retroactively gain speculative columns. List content uses its approved slug/order/active fields; later additions require their own approved migration.
 
 No API accepts authoritative `schoolId` from ordinary CMS payloads. It is resolved from the installation's single School root.
 

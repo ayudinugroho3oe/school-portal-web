@@ -1,6 +1,6 @@
 # Admin CMS Media Strategy
 
-Version: 0.1
+Version: 0.2
 Status: APPROVED
 Implementation Authority: ALLOWED
 Owner: Product Owner
@@ -10,7 +10,7 @@ Date: 2026-07-20
 
 Use a provider abstraction with an ignored local-filesystem adapter for development and **Vercel Blob as the approved production direction**, subject to environment provisioning, budget, production database readiness, and secret review. Each school installation uses independent storage and credentials. Preserve a migration path to S3-compatible storage by storing stable provider/key/checksum metadata rather than binding entities to one permanent URL. Every asset retains `schoolId`, and every storage key begins with the installation School namespace.
 
-No storage service or dependency is installed in Sprint 5.1.
+Repository checkpoint: Sprint 5.2.4 implemented MediaAsset metadata, validation, provider interfaces, and an ignored local-filesystem development adapter. No media HTTP API, Admin Media Library, production Vercel Blob adapter, or deployment credentials are implemented.
 
 Media usage is configuration-first: new CMS domains and placements reference MediaAsset UUIDs/usage metadata without adding provider-specific binary columns.
 
@@ -83,8 +83,8 @@ Filename extension alone is never trusted. Production should add malware scannin
 ## Replacement and Deletion
 
 - Replacement creates a new MediaAsset and updates the working-copy reference; it does not mutate the old object.
-- Publishing updates the public snapshot atomically.
-- Old assets remain until no working copy or publication references them.
+- Publishing appends an immutable snapshot and atomically moves ContentPublicationHead.
+- Old assets remain while referenced by any working copy or retained publication; physical history-aware usage/deletion remains deferred.
 - Archive first; physical deletion requires zero usages, Super Admin permission, a retention window, successful provider deletion, and an audit event.
 - Failed physical deletion is retryable and must not delete database metadata falsely.
 

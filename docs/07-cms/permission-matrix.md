@@ -1,6 +1,6 @@
 # Admin CMS Permission Matrix
 
-Version: 0.1
+Version: 0.2
 Status: APPROVED
 Implementation Authority: ALLOWED
 Owner: Product Owner
@@ -76,6 +76,12 @@ cms.contact_channel.manage
 cms.social_link.manage
 cms.cta.manage
 ```
+
+## Runtime Checkpoint after Sprint 5.2.6
+
+Implemented runtime permissions cover School Settings, configuration collections, media, and Program/Teacher/Gallery/Testimonial actions. Publish is explicit for each implemented publication root. Unpublish currently uses that domain's approved `archive` authority while preserving immutable history and returning the working copy to `DRAFT`.
+
+Identity, Homepage, Profile, Contact, PPDB, Navigation/Footer, Preview, Audit UI, and Users/Access permission codes in this matrix remain approved target permissions; they must be added only with their authorized consuming milestone. No wildcard, implicit grant, or role shortcut is implemented.
 
 ### Sprint 5.2.3 Configuration Permissions
 

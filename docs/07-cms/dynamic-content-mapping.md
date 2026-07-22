@@ -1,7 +1,8 @@
 # Dynamic Public Content Boundary
 
-Version: 1.0
-Status: APPROVED BY PRODUCT OWNER REVISION
+Version: 1.1
+Status: APPROVED — ALIGNED AFTER SPRINT 5.2.6
+Implementation Authority: COMPLETED FOR CURRENT BOUNDARY; FUTURE MIGRATION REQUIRES SPRINT APPROVAL
 Date: 2026-07-19
 
 ## Technical Identity
@@ -28,14 +29,16 @@ Navbar, footer, floating WhatsApp, and homepage hero resolve current School Sett
 | PPDB copy, schedule, announcements | PPDB pages/components | PpdbContent + Announcement |
 | Homepage testimonials and supporting copy | homepage components | PageSectionContent |
 
-## Media Contract for the Next CMS Sprint
+## Media Foundation Checkpoint
 
 - Store metadata and a storage key/URL, never large binaries in PostgreSQL.
-- Define MIME allowlist, maximum size, dimensions/aspect-ratio policy, checksum, alt text, ownership, visibility, and lifecycle status.
-- Upload requires authenticated, authorized, rate-limited server endpoints and object-storage signed operations.
+- MediaAsset metadata, MIME/size/magic-byte validation, checksums, School ownership, lifecycle, and a local development storage adapter are implemented.
+- Media HTTP upload and production object-storage signed operations remain unimplemented.
 - Preserve local fallback images when media is null, unavailable, or rejected.
 - Storage provider selection and upload implementation require a separate approved sprint.
 
-## Next Recommended Scope
+## Next Roadmap Scope
 
-Build an Admin CMS module with typed aggregates for media assets, profile, programs, galleries, teachers, contact/PPDB content, announcements, draft/published states, granular permissions, audit events, and an object-storage adapter. Migrate static content incrementally with visual regression checks; do not redesign public pages.
+Sprint 5.3 is Identity, Homepage, Profile, Contact, Navigation, and Footer: add their approved typed working copies, admin editors/APIs, preview boundary, verified backfill, and domain-by-domain public snapshot resolvers with fallback. Do not redesign public pages. Programs/Teachers/Testimonials, Gallery/Media UI, and PPDB content remain assigned to later roadmap milestones.
+
+Sprint 5.2.6 implemented immutable ContentPublication history plus one ContentPublicationHead pointer for Program, Teacher Profile, Gallery Album, and Testimonial. Gallery Album is the publication aggregate root; Gallery Item is embedded working content and has no head.
