@@ -1,0 +1,10 @@
+import{describe,expect,it,vi}from"vitest";
+import{StructuredContentService}from"@/modules/structured-content/application/service";
+
+const entity={id:crypto.randomUUID(),schoolId:crypto.randomUUID(),sortOrder:0,isActive:true,updatedAt:new Date()};
+function setup(){const repo={list:vi.fn().mockResolvedValue([]),findById:vi.fn().mockResolvedValue(entity),create:vi.fn().mockResolvedValue(entity),update:vi.fn().mockResolvedValue(entity),setActive:vi.fn().mockResolvedValue(entity),reorder:vi.fn().mockResolvedValue([entity])};const resolver={resolveActiveSchoolId:vi.fn().mockResolvedValue(entity.schoolId)};const relations=vi.fn();const service=new StructuredContentService(repo,resolver,{view:"cms.program.view",create:"cms.program.create",edit:"cms.program.edit",reorder:"cms.program.reorder"},relations);return{repo,resolver,relations,service};}
+describe("structured content service",()=>{
+ it("authorizes before resolver, relations, and repository",async()=>{const s=setup();await expect(s.service.create({id:crypto.randomUUID(),role:"STAFF"},"r",{title:"X"})).rejects.toMatchObject({code:"FORBIDDEN"});expect(s.resolver.resolveActiveSchoolId).not.toHaveBeenCalled();expect(s.relations).not.toHaveBeenCalled();expect(s.repo.create).not.toHaveBeenCalled();});
+ it("uses canonical School and validates relations before create",async()=>{const s=setup();await s.service.create({id:crypto.randomUUID(),role:"SCHOOL_ADMIN"},"r",{title:"X"});expect(s.relations).toHaveBeenCalledWith(entity.schoolId,{title:"X"});expect(s.repo.create).toHaveBeenCalledWith(entity.schoolId,{title:"X"});});
+ it("passes optimistic token and supports reorder",async()=>{const s=setup();const token=new Date().toISOString();await s.service.update({id:crypto.randomUUID(),role:"SCHOOL_ADMIN"},"r",entity.id,{title:"Y",expectedUpdatedAt:token});expect(s.repo.update).toHaveBeenCalledWith(entity.schoolId,entity.id,new Date(token),{title:"Y"});await s.service.reorder({id:crypto.randomUUID(),role:"SCHOOL_ADMIN"},"r",[entity.id],token);expect(s.repo.reorder).toHaveBeenCalled();});
+});

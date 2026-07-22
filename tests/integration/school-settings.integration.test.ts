@@ -19,8 +19,19 @@ function assertTestDatabase() {
 }
 
 async function clean() {
+  await prisma.contentPublicationHead.deleteMany(); await prisma.contentPublication.deleteMany(); await prisma.contentAuditEvent.deleteMany();
+  await prisma.galleryItem.deleteMany();
+  await prisma.program.deleteMany();
+  await prisma.teacherProfile.deleteMany();
+  await prisma.galleryAlbum.deleteMany();
+  await prisma.testimonial.deleteMany();
+  await prisma.mediaAsset.deleteMany();
+  await prisma.contactChannel.deleteMany();
+  await prisma.socialLink.deleteMany();
+  await prisma.callToAction.deleteMany();
   await prisma.auditLog.deleteMany();
   await prisma.schoolSettings.deleteMany();
+  await prisma.school.deleteMany();
 }
 
 describe.sequential("School Settings PostgreSQL integration", () => {
@@ -30,6 +41,7 @@ describe.sequential("School Settings PostgreSQL integration", () => {
   it("initializes atomically for SUPER_ADMIN and writes audit", async () => {
     const record = await initializeSchoolSettings(superAdmin, initial, "init-request");
     expect(record.key).toBe("PRIMARY_SCHOOL");
+    expect(await prisma.school.count({ where: { id: record.schoolId, isActive: true } })).toBe(1);
     const audit = await prisma.auditLog.findFirstOrThrow({ where: { action: "SCHOOL_SETTINGS_INITIALIZED" } });
     expect(audit.actorUserId).toBe(superAdmin.id); expect(audit.beforeData).toBeNull(); expect(audit.requestId).toBe("init-request");
   });

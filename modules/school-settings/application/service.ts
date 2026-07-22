@@ -1,6 +1,7 @@
 import { Prisma } from "@/generated/prisma/client";
 import { can, type Actor, type Permission } from "@/lib/auth/permissions";
 import { assertDatabaseConfigured, prisma } from "@/lib/prisma";
+import { ensureSchoolRoot } from "@/modules/school/application/service";
 import { PRIMARY_SCHOOL_KEY } from "../domain/constants";
 import { alreadyInitialized, forbidden, notFound, staleUpdate } from "../domain/errors";
 import type { InitializeSchoolSettingsInput, UpdateSchoolSettingsInput } from "../validation/schemas";
@@ -31,7 +32,14 @@ export async function initializeSchoolSettings(actor: Actor, input: InitializeSc
   try {
     return await prisma.$transaction(async (tx) => {
       if (await tx.schoolSettings.findUnique({ where: { key: PRIMARY_SCHOOL_KEY } })) throw alreadyInitialized();
-      const data = normalizeJsonNulls({ ...input, key: PRIMARY_SCHOOL_KEY, updatedByUserId: actor.id }) as Prisma.SchoolSettingsUncheckedCreateInput;
+      const school = await ensureSchoolRoot(tx, {
+        schoolCode: input.schoolCode,
+        schoolName: input.schoolName,
+        isActive: true,
+        timezone: input.timezone,
+        locale: input.locale,
+      });
+      const data = normalizeJsonNulls({ ...input, schoolId: school.id, key: PRIMARY_SCHOOL_KEY, updatedByUserId: actor.id }) as Prisma.SchoolSettingsUncheckedCreateInput;
       const created = await tx.schoolSettings.create({ data });
       await tx.auditLog.create({ data: {
         actorUserId: actor.id, action: "SCHOOL_SETTINGS_INITIALIZED", entityType: "SchoolSettings",

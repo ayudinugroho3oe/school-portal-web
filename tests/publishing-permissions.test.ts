@@ -1,0 +1,2 @@
+import{describe,expect,it}from"vitest";import{can}from"@/lib/auth/permissions";
+describe("publishing grants",()=>{it.each(["cms.program.publish","cms.teacher.publish","cms.gallery.publish","cms.testimonial.publish"]as const)("grants %s only to administrators",p=>{expect(can("SUPER_ADMIN",p)).toBe(true);expect(can("SCHOOL_ADMIN",p)).toBe(true);expect(can("STAFF",p)).toBe(false);expect(can("TEACHER",p)).toBe(false);});});

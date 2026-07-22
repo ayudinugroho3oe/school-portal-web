@@ -25,6 +25,20 @@ enum OwnershipStatus {
   PUBLIC
 }
 
+enum MediaAssetStatus {
+  PENDING
+  READY
+  ACTIVE
+  ARCHIVED
+  FAILED
+}
+
+enum ContentLifecycleStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
 model User {
   id            String    @id @default(uuid()) @db.Uuid
   name          String
@@ -71,52 +85,324 @@ model Account {
   updatedAt             DateTime  @updatedAt @db.Timestamptz(3)
   user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([userId])
   @@unique([providerId, accountId])
+  @@index([userId])
   @@map("accounts")
 }
 
 model Verification {
-  id         String    @id @default(uuid()) @db.Uuid
+  id         String   @id @default(uuid()) @db.Uuid
   identifier String
   value      String
-  expiresAt  DateTime  @db.Timestamptz(3)
-  createdAt  DateTime  @default(now()) @db.Timestamptz(3)
-  updatedAt  DateTime  @updatedAt @db.Timestamptz(3)
+  expiresAt  DateTime @db.Timestamptz(3)
+  createdAt  DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt  DateTime @updatedAt @db.Timestamptz(3)
 
   @@index([identifier])
   @@map("verifications")
 }
 
+model School {
+  id                 String                   @id @default(uuid()) @db.Uuid
+  schoolCode         String                   @unique @db.VarChar(20)
+  schoolName         String                   @db.VarChar(150)
+  isActive           Boolean                  @default(true)
+  timezone           String                   @default("Asia/Jakarta")
+  locale             String                   @default("id-ID")
+  createdAt          DateTime                 @default(now()) @db.Timestamptz(3)
+  updatedAt          DateTime                 @updatedAt @db.Timestamptz(3)
+  settings           SchoolSettings?
+  contactChannels    ContactChannel[]
+  socialLinks        SocialLink[]
+  callToActions      CallToAction[]
+  mediaAssets        MediaAsset[]
+  programs           Program[]
+  teacherProfiles    TeacherProfile[]
+  galleryAlbums      GalleryAlbum[]
+  galleryItems       GalleryItem[]
+  testimonials       Testimonial[]
+  publications       ContentPublication[]
+  publicationHeads   ContentPublicationHead[]
+  contentAuditEvents ContentAuditEvent[]
+
+  @@index([isActive])
+  @@map("schools")
+}
+
+model MediaAsset {
+  id                 String           @id @default(uuid()) @db.Uuid
+  schoolId           String           @db.Uuid
+  storageProvider    String           @db.VarChar(40)
+  storageKey         String           @db.VarChar(500)
+  originalFilename   String           @db.VarChar(255)
+  mimeType           String           @db.VarChar(100)
+  sizeBytes          Int
+  width              Int?
+  height             Int?
+  altText            String?          @db.VarChar(250)
+  caption            String?          @db.VarChar(500)
+  checksum           String           @db.Char(64)
+  status             MediaAssetStatus @default(ACTIVE)
+  createdBy          String           @db.Uuid
+  createdAt          DateTime         @default(now()) @db.Timestamptz(3)
+  updatedAt          DateTime         @updatedAt @db.Timestamptz(3)
+  school             School           @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  featuredPrograms   Program[]        @relation("ProgramFeaturedMedia")
+  teacherPhotos      TeacherProfile[] @relation("TeacherPhotoMedia")
+  galleryCovers      GalleryAlbum[]   @relation("GalleryCoverMedia")
+  galleryItems       GalleryItem[]    @relation("GalleryItemMedia")
+  testimonialAvatars Testimonial[]    @relation("TestimonialAvatarMedia")
+
+  @@unique([schoolId, storageKey])
+  @@index([schoolId, status, createdAt])
+  @@index([schoolId, checksum])
+  @@map("media_assets")
+}
+
+model Program {
+  id              String                 @id @default(uuid()) @db.Uuid
+  schoolId        String                 @db.Uuid
+  code            String                 @db.VarChar(64)
+  title           String                 @db.VarChar(120)
+  slug            String                 @db.VarChar(120)
+  summary         String                 @db.VarChar(300)
+  description     String                 @db.VarChar(10000)
+  featuredMediaId String?                @db.Uuid
+  sortOrder       Int                    @default(0)
+  isActive        Boolean                @default(true)
+  status          ContentLifecycleStatus @default(DRAFT)
+  createdAt       DateTime               @default(now()) @db.Timestamptz(3)
+  updatedAt       DateTime               @updatedAt @db.Timestamptz(3)
+  school          School                 @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  featuredMedia   MediaAsset?            @relation("ProgramFeaturedMedia", fields: [featuredMediaId], references: [id], onDelete: Restrict)
+
+  @@unique([schoolId, code])
+  @@unique([schoolId, slug])
+  @@index([schoolId, isActive, sortOrder])
+  @@map("programs")
+}
+
+model TeacherProfile {
+  id            String                 @id @default(uuid()) @db.Uuid
+  schoolId      String                 @db.Uuid
+  name          String                 @db.VarChar(120)
+  position      String?                @db.VarChar(120)
+  biography     String?                @db.VarChar(2000)
+  qualification String?                @db.VarChar(200)
+  photoMediaId  String?                @db.Uuid
+  sortOrder     Int                    @default(0)
+  isActive      Boolean                @default(true)
+  status        ContentLifecycleStatus @default(DRAFT)
+  createdAt     DateTime               @default(now()) @db.Timestamptz(3)
+  updatedAt     DateTime               @updatedAt @db.Timestamptz(3)
+  school        School                 @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  photoMedia    MediaAsset?            @relation("TeacherPhotoMedia", fields: [photoMediaId], references: [id], onDelete: Restrict)
+
+  @@index([schoolId, isActive, sortOrder])
+  @@map("teacher_profiles")
+}
+
+model GalleryAlbum {
+  id           String                 @id @default(uuid()) @db.Uuid
+  schoolId     String                 @db.Uuid
+  title        String                 @db.VarChar(150)
+  slug         String                 @db.VarChar(120)
+  description  String?                @db.VarChar(2000)
+  coverMediaId String?                @db.Uuid
+  sortOrder    Int                    @default(0)
+  isActive     Boolean                @default(true)
+  status       ContentLifecycleStatus @default(DRAFT)
+  createdAt    DateTime               @default(now()) @db.Timestamptz(3)
+  updatedAt    DateTime               @updatedAt @db.Timestamptz(3)
+  school       School                 @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  coverMedia   MediaAsset?            @relation("GalleryCoverMedia", fields: [coverMediaId], references: [id], onDelete: Restrict)
+  items        GalleryItem[]
+
+  @@unique([schoolId, slug])
+  @@index([schoolId, isActive, sortOrder])
+  @@map("gallery_albums")
+}
+
+model GalleryItem {
+  id        String       @id @default(uuid()) @db.Uuid
+  schoolId  String       @db.Uuid
+  albumId   String       @db.Uuid
+  mediaId   String       @db.Uuid
+  caption   String?      @db.VarChar(500)
+  sortOrder Int          @default(0)
+  isActive  Boolean      @default(true)
+  createdAt DateTime     @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime     @updatedAt @db.Timestamptz(3)
+  school    School       @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  album     GalleryAlbum @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  media     MediaAsset   @relation("GalleryItemMedia", fields: [mediaId], references: [id], onDelete: Restrict)
+
+  @@unique([albumId, mediaId])
+  @@index([schoolId, albumId, isActive, sortOrder])
+  @@map("gallery_items")
+}
+
+model Testimonial {
+  id            String                 @id @default(uuid()) @db.Uuid
+  schoolId      String                 @db.Uuid
+  authorName    String                 @db.VarChar(120)
+  authorRole    String?                @db.VarChar(120)
+  quote         String                 @db.VarChar(2000)
+  avatarMediaId String?                @db.Uuid
+  sortOrder     Int                    @default(0)
+  isActive      Boolean                @default(true)
+  status        ContentLifecycleStatus @default(DRAFT)
+  createdAt     DateTime               @default(now()) @db.Timestamptz(3)
+  updatedAt     DateTime               @updatedAt @db.Timestamptz(3)
+  school        School                 @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  avatarMedia   MediaAsset?            @relation("TestimonialAvatarMedia", fields: [avatarMediaId], references: [id], onDelete: Restrict)
+
+  @@index([schoolId, isActive, sortOrder])
+  @@map("testimonials")
+}
+
+model ContentPublication {
+  id                String                  @id @default(uuid()) @db.Uuid
+  schoolId          String                  @db.Uuid
+  entityType        String                  @db.VarChar(40)
+  entityId          String                  @db.Uuid
+  slug              String?                 @db.VarChar(120)
+  payload           Json
+  version           Int
+  sourceUpdatedAt   DateTime                @db.Timestamptz(3)
+  publishedAt       DateTime                @default(now()) @db.Timestamptz(3)
+  publishedByUserId String                  @db.Uuid
+  createdAt         DateTime                @default(now()) @db.Timestamptz(3)
+  school            School                  @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  currentFor        ContentPublicationHead?
+
+  @@unique([id, schoolId, entityType, entityId])
+  @@unique([schoolId, entityType, entityId, version])
+  @@index([schoolId, entityType, publishedAt])
+  @@map("content_publications")
+}
+
+model ContentPublicationHead {
+  id                   String             @id @default(uuid()) @db.Uuid
+  schoolId             String             @db.Uuid
+  entityType           String             @db.VarChar(40)
+  entityId             String             @db.Uuid
+  currentPublicationId String             @unique @db.Uuid
+  createdAt            DateTime           @default(now()) @db.Timestamptz(3)
+  updatedAt            DateTime           @updatedAt @db.Timestamptz(3)
+  school               School             @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  currentPublication   ContentPublication @relation(fields: [currentPublicationId, schoolId, entityType, entityId], references: [id, schoolId, entityType, entityId], onDelete: Restrict)
+
+  @@unique([schoolId, entityType, entityId])
+  @@unique([currentPublicationId, schoolId, entityType, entityId])
+  @@index([schoolId, entityType, updatedAt])
+  @@map("content_publication_heads")
+}
+
+model ContentAuditEvent {
+  id              String                  @id @default(uuid()) @db.Uuid
+  schoolId        String                  @db.Uuid
+  actorUserId     String                  @db.Uuid
+  entityType      String                  @db.VarChar(40)
+  entityId        String                  @db.Uuid
+  action          String                  @db.VarChar(40)
+  fromStatus      ContentLifecycleStatus?
+  toStatus        ContentLifecycleStatus
+  sourceUpdatedAt DateTime                @db.Timestamptz(3)
+  requestId       String                  @db.VarChar(100)
+  createdAt       DateTime                @default(now()) @db.Timestamptz(3)
+  school          School                  @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+
+  @@index([schoolId, entityType, entityId, createdAt])
+  @@index([requestId])
+  @@map("content_audit_events")
+}
+
+model ContactChannel {
+  id              String   @id @default(uuid()) @db.Uuid
+  schoolId        String   @db.Uuid
+  typeCode        String   @db.VarChar(40)
+  label           String   @db.VarChar(120)
+  value           String   @db.VarChar(500)
+  url             String?  @db.VarChar(500)
+  sortOrder       Int      @default(0)
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt       DateTime @updatedAt @db.Timestamptz(3)
+  updatedByUserId String   @db.Uuid
+  school          School   @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+
+  @@unique([schoolId, typeCode])
+  @@index([schoolId, sortOrder, id])
+  @@map("contact_channels")
+}
+
+model SocialLink {
+  id              String   @id @default(uuid()) @db.Uuid
+  schoolId        String   @db.Uuid
+  platformCode    String   @db.VarChar(40)
+  label           String   @db.VarChar(120)
+  url             String   @db.VarChar(500)
+  sortOrder       Int      @default(0)
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt       DateTime @updatedAt @db.Timestamptz(3)
+  updatedByUserId String   @db.Uuid
+  school          School   @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+
+  @@unique([schoolId, platformCode])
+  @@index([schoolId, sortOrder, id])
+  @@map("social_links")
+}
+
+model CallToAction {
+  id              String   @id @default(uuid()) @db.Uuid
+  schoolId        String   @db.Uuid
+  code            String   @db.VarChar(64)
+  label           String   @db.VarChar(120)
+  targetUrl       String   @db.VarChar(500)
+  description     String?  @db.VarChar(500)
+  sortOrder       Int      @default(0)
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt       DateTime @updatedAt @db.Timestamptz(3)
+  updatedByUserId String   @db.Uuid
+  school          School   @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+
+  @@unique([schoolId, code])
+  @@index([schoolId, sortOrder, id])
+  @@map("call_to_actions")
+}
+
 model SchoolSettings {
-  id                      String          @id @default(uuid()) @db.Uuid
-  key                     String          @unique @db.VarChar(50)
-  schoolCode              String          @unique @db.VarChar(20)
-  schoolName              String          @db.VarChar(150)
-  isActive                Boolean         @default(true)
-  shortName               String?         @db.VarChar(50)
-  npsn                    String?         @db.VarChar(8)
+  id                      String           @id @default(uuid()) @db.Uuid
+  key                     String           @unique @db.VarChar(50)
+  schoolCode              String           @unique @db.VarChar(20)
+  schoolName              String           @db.VarChar(150)
+  isActive                Boolean          @default(true)
+  shortName               String?          @db.VarChar(50)
+  npsn                    String?          @db.VarChar(8)
   schoolLevel             SchoolLevel?
   ownershipStatus         OwnershipStatus?
   foundationName          String?
-  principalName           String?         @db.VarChar(120)
+  principalName           String?          @db.VarChar(120)
   principalPhotoUrl       String?
   principalWelcome        String?
   operationalPermitNumber String?
   accreditation           String?
   email                   String?
-  phone                   String?         @db.VarChar(15)
-  whatsapp                String?         @db.VarChar(15)
+  phone                   String?          @db.VarChar(15)
+  whatsapp                String?          @db.VarChar(15)
   websiteUrl              String?
-  addressLine             String?         @db.VarChar(250)
+  addressLine             String?          @db.VarChar(250)
   village                 String?
   district                String?
-  city                    String?         @db.VarChar(100)
-  province                String?         @db.VarChar(100)
-  postalCode              String?         @db.VarChar(5)
-  timezone                String          @default("Asia/Jakarta")
-  locale                  String          @default("id-ID")
-  academicYearLabel       String?         @db.VarChar(9)
+  city                    String?          @db.VarChar(100)
+  province                String?          @db.VarChar(100)
+  postalCode              String?          @db.VarChar(5)
+  timezone                String           @default("Asia/Jakarta")
+  locale                  String           @default("id-ID")
+  academicYearLabel       String?          @db.VarChar(9)
   logoUrl                 String?
   logoDarkUrl             String?
   faviconUrl              String?
@@ -134,9 +420,11 @@ model SchoolSettings {
   footerContent           Json?
   ppdbInfo                Json?
   publicAnnouncements     Json?
-  createdAt               DateTime        @default(now()) @db.Timestamptz(3)
-  updatedAt               DateTime        @updatedAt @db.Timestamptz(3)
-  updatedByUserId         String?         @db.Uuid
+  createdAt               DateTime         @default(now()) @db.Timestamptz(3)
+  updatedAt               DateTime         @updatedAt @db.Timestamptz(3)
+  updatedByUserId         String?          @db.Uuid
+  schoolId                String           @unique @db.Uuid
+  school                  School           @relation(fields: [schoolId], references: [id], onDelete: Restrict)
   auditLogs               AuditLog[]
 
   @@map("school_settings")

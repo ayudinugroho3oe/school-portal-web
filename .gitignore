@@ -54,3 +54,5 @@ postgresql-*-windows-x64.exe
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# Local CMS media; binaries are never committed.
+/public/uploads/
