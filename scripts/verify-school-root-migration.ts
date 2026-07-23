@@ -20,6 +20,7 @@ const sprint521Migrations = [...sprint4Migrations, "20260720000000_add_canonical
 const sprint523Migrations = [...sprint521Migrations, "20260720010000_add_cms_configuration_domain"];
 const sprint524Migrations = [...sprint523Migrations, "20260720020000_add_media_foundation"];
 const sprint525Migrations = [...sprint524Migrations, "20260720030000_add_structured_content_domain"];
+const sprint526Migrations = [...sprint525Migrations, "20260720040000_add_publishing_foundation"];
 
 function urlForSchema(schema: string) {
   const url = new URL(databaseUrl!);
@@ -98,6 +99,7 @@ async function main() {
   const sprint523Schema = `media_upgrade_${suffix}`;
   const sprint524Schema = `content_upgrade_${suffix}`;
   const sprint525Schema = `publishing_upgrade_${suffix}`;
+  const sprint526Schema = `school_content_upgrade_${suffix}`;
   const ambiguousSchema = `school_root_ambiguous_${suffix}`;
   const admin = new Client({ connectionString: databaseUrl });
   await admin.connect();
@@ -109,6 +111,7 @@ async function main() {
     await admin.query(`CREATE SCHEMA "${sprint523Schema}"`);
     await admin.query(`CREATE SCHEMA "${sprint524Schema}"`);
     await admin.query(`CREATE SCHEMA "${sprint525Schema}"`);
+    await admin.query(`CREATE SCHEMA "${sprint526Schema}"`);
     await admin.query(`CREATE SCHEMA "${ambiguousSchema}"`);
 
     runPrisma(urlForSchema(emptySchema));
@@ -188,6 +191,12 @@ async function main() {
     await withSearchPath(sprint525Schema,async client=>{await client.query('INSERT INTO "schools" ("id","schoolCode","schoolName","isActive","timezone","locale","createdAt","updatedAt") VALUES ($1,$2,$3,true,\'Asia/Jakarta\',\'id-ID\',NOW(),NOW())',[sprint525SchoolId,`S525_${suffix.toUpperCase()}`,"Sprint 5.2.5 School"]);await client.query('INSERT INTO "programs" ("id","schoolId","code","title","slug","summary","description","sortOrder","isActive","createdAt","updatedAt") VALUES ($1,$2,\'EXISTING\',\'Existing\',\'existing\',\'Summary\',\'Description\',0,true,NOW(),NOW())',[randomUUID(),sprint525SchoolId]);});
     runPrisma(urlForSchema(sprint525Schema));
     await withSearchPath(sprint525Schema,async client=>{const r=await client.query('SELECT (SELECT COUNT(*) FROM "programs")::int programs,(SELECT COUNT(*) FROM "content_publications")::int publications,(SELECT "status"::text FROM "programs" LIMIT 1) status');if(r.rows[0].programs!==1||r.rows[0].publications!==0||r.rows[0].status!=="DRAFT")throw new Error("Sprint 5.2.5 upgrade did not preserve working content or initialize publishing safely.");});
+
+    await applyHistoricalState(sprint526Schema,sprint526Migrations);
+    const sprint526SchoolId=randomUUID();
+    await withSearchPath(sprint526Schema,async client=>{await client.query('INSERT INTO "schools" ("id","schoolCode","schoolName","isActive","timezone","locale","createdAt","updatedAt") VALUES ($1,$2,$3,true,\'Asia/Jakarta\',\'id-ID\',NOW(),NOW())',[sprint526SchoolId,`S526_${suffix.toUpperCase()}`,"Preserved School Name"]);await client.query('INSERT INTO "school_settings" ("id","schoolId","key","schoolCode","schoolName","isActive","shortName","schoolMotto","vision","mission","history","principalName","principalWelcome","schoolValues","timezone","locale","createdAt","updatedAt") VALUES ($1,$1,\'PRIMARY_SCHOOL\',$2,$3,true,\'Short\',\'Existing tagline\',\'Existing vision\',\'Existing mission\',\'Existing history\',\'Existing principal\',\'Existing greeting\',\'["Value"]\'::jsonb,\'Asia/Jakarta\',\'id-ID\',NOW(),NOW())',[sprint526SchoolId,`S526_${suffix.toUpperCase()}`,"Preserved School Name"]);});
+    runPrisma(urlForSchema(sprint526Schema));
+    await withSearchPath(sprint526Schema,async client=>{const r=await client.query('SELECT i."schoolName",i."shortName",i."tagline",p."vision",p."mission",p."principalGreeting",p."valuesJson",(SELECT COUNT(*) FROM "content_publications")::int publications FROM "school_identities" i JOIN "school_profiles" p ON p."schoolId"=i."schoolId"');const row=r.rows[0];if(r.rowCount!==1||row.schoolName!=="Preserved School Name"||row.shortName!=="Short"||row.tagline!=="Existing tagline"||row.vision!=="Existing vision"||row.mission!=="Existing mission"||row.principalGreeting!=="Existing greeting"||row.publications!==0)throw new Error("Sprint 5.3.1 migration did not safely backfill singleton working copies.");});
     runPrisma(urlForSchema(sprint523Schema));
     await withSearchPath(sprint523Schema, async (client) => {
       const result = await client.query('SELECT (SELECT COUNT(*) FROM "schools")::int AS schools, (SELECT COUNT(*) FROM "contact_channels")::int AS contacts, (SELECT COUNT(*) FROM "media_assets")::int AS media');
@@ -222,7 +231,7 @@ async function main() {
       }
     });
 
-    console.log("Migration verification passed for clean, Sprint 4, Sprint 5.2.1, Sprint 5.2.3, Sprint 5.2.4, Sprint 5.2.5, and ambiguous-data safety states.");
+    console.log("Migration verification passed for clean, Sprint 4, Sprint 5.2.1, Sprint 5.2.3, Sprint 5.2.4, Sprint 5.2.5, Sprint 5.2.6/5.3.1 upgrade, and ambiguous-data safety states.");
   } finally {
     await admin.query(`DROP SCHEMA IF EXISTS "${emptySchema}" CASCADE`);
     await admin.query(`DROP SCHEMA IF EXISTS "${upgradeSchema}" CASCADE`);
@@ -230,6 +239,7 @@ async function main() {
     await admin.query(`DROP SCHEMA IF EXISTS "${sprint523Schema}" CASCADE`);
     await admin.query(`DROP SCHEMA IF EXISTS "${sprint524Schema}" CASCADE`);
     await admin.query(`DROP SCHEMA IF EXISTS "${sprint525Schema}" CASCADE`);
+    await admin.query(`DROP SCHEMA IF EXISTS "${sprint526Schema}" CASCADE`);
     await admin.query(`DROP SCHEMA IF EXISTS "${ambiguousSchema}" CASCADE`);
     await admin.end();
   }

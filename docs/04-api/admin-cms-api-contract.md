@@ -57,18 +57,31 @@ School Admin has approved publish authority within the installation. No tenant-c
 
 ## Endpoint Summary
 
-Implementation checkpoint: Sprint 5.2.6 currently exposes configuration collection APIs, structured-content working-copy APIs, publish/unpublish/status routes, and read-only public snapshot routes. Identity/homepage/profile/contact/navigation/footer, preview-session, and media HTTP routes below are approved roadmap contracts but are not yet implemented. The canonical structured-content alignment later in this document supersedes older field/lifecycle shorthand.
+Implementation checkpoint: Sprint 5.3.1 exposes School Identity and School Profile singleton working-copy APIs, immutable publish/unpublish/status operations, and read-only public snapshot APIs in addition to the Sprint 5.2.6 APIs. Homepage/contact/navigation/footer, preview-session, and media HTTP routes remain roadmap contracts.
 
 ### School Identity
 
 | Method | Route | Permission | Purpose |
 | --- | --- | --- | --- |
 | GET | `/api/v1/cms/school-identity` | `cms.identity.view` | Read working copy |
-| PATCH | `/api/v1/cms/school-identity` | `cms.identity.edit` | Update editable identity |
-| POST | `/api/v1/cms/school-identity/preview` | `cms.identity.view` | Create authenticated preview context |
+| PUT | `/api/v1/cms/school-identity` | `cms.identity.edit` | Replace allowlisted editable identity fields with optimistic concurrency |
 | POST | `/api/v1/cms/school-identity/publish` | `cms.identity.publish` | Publish validated snapshot |
+| POST | `/api/v1/cms/school-identity/unpublish` | `cms.identity.archive` | Remove current head and return working copy to Draft |
+| GET | `/api/v1/cms/school-identity/publication-status` | `cms.identity.view` | Read lifecycle/head/change status |
+| GET | `/api/v1/public/school-identity` | Public | Read current immutable snapshot; 404 when unpublished |
 
 Technical fields such as `schoolCode`, key, role rules, and auth configuration are rejected from the public identity payload. Super Admin-only technical updates remain a separate settings command.
+
+### School Profile
+
+| Method | Route | Permission | Purpose |
+| --- | --- | --- | --- |
+| GET | `/api/v1/cms/school-profile` | `cms.profile.view` | Read working copy |
+| PUT | `/api/v1/cms/school-profile` | `cms.profile.edit` | Replace allowlisted profile fields with optimistic concurrency |
+| POST | `/api/v1/cms/school-profile/publish` | `cms.profile.publish` | Publish validated immutable snapshot |
+| POST | `/api/v1/cms/school-profile/unpublish` | `cms.profile.archive` | Remove current head and return working copy to Draft |
+| GET | `/api/v1/cms/school-profile/publication-status` | `cms.profile.view` | Read lifecycle/head/change status |
+| GET | `/api/v1/public/school-profile` | Public | Read current immutable snapshot; 404 when unpublished |
 
 ### Tenant-Singleton Content
 

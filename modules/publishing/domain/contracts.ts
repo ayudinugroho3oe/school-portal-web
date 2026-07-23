@@ -1,6 +1,6 @@
 import type { SchoolId } from "@/modules/cms/domain/contracts";
 
-export const publishableTypes=["PROGRAM","TEACHER_PROFILE","GALLERY_ALBUM","TESTIMONIAL"] as const;
+export const publishableTypes=["PROGRAM","TEACHER_PROFILE","GALLERY_ALBUM","TESTIMONIAL","SCHOOL_IDENTITY","SCHOOL_PROFILE"] as const;
 export type PublishableType=(typeof publishableTypes)[number];
 export type PublicationSnapshot=Readonly<{id:string;schoolId:SchoolId;entityType:PublishableType;entityId:string;version:number;payload:unknown;publishedAt:Date;sourceUpdatedAt:Date}>;
 export interface PublishingRepository {

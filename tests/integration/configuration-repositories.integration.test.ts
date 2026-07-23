@@ -23,6 +23,8 @@ async function clean() {
   await prisma.callToAction.deleteMany();
   await prisma.auditLog.deleteMany();
   await prisma.schoolSettings.deleteMany();
+  await prisma.schoolIdentity.deleteMany();
+  await prisma.schoolProfile.deleteMany();
   await prisma.school.deleteMany();
 }
 

@@ -43,3 +43,8 @@ describe("Sprint 5.2.5 structured content permissions",()=>{
  it.each(admin)("grants %s explicitly to administrators",permission=>{expect(can("SUPER_ADMIN",permission)).toBe(true);expect(can("SCHOOL_ADMIN",permission)).toBe(true);expect(can("STAFF",permission)).toBe(false);expect(can("TEACHER",permission)).toBe(false);});
  it.each(["cms.program.delete","cms.teacher.delete","cms.gallery.delete","cms.testimonial.delete"] as const)("reserves %s for Super Admin",permission=>{expect(can("SUPER_ADMIN",permission)).toBe(true);expect(can("SCHOOL_ADMIN",permission)).toBe(false);});
 });
+
+describe("Sprint 5.3.1 School content permissions",()=>{
+ const permissions=["cms.identity.view","cms.identity.edit","cms.identity.publish","cms.identity.archive","cms.profile.view","cms.profile.edit","cms.profile.publish","cms.profile.archive"] as const;
+ it.each(permissions)("grants %s only to administrators",permission=>{expect(can("SUPER_ADMIN",permission)).toBe(true);expect(can("SCHOOL_ADMIN",permission)).toBe(true);expect(can("STAFF",permission)).toBe(false);expect(can("TEACHER",permission)).toBe(false);});
+});

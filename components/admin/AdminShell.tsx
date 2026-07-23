@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import LogoutButton from "./LogoutButton";
 
-const links = [{ href: "/admin", label: "Ringkasan" }, { href: "/admin/settings/school", label: "Identitas Sekolah" }];
+const links = [{ href: "/admin", label: "Ringkasan" }, { href: "/admin/cms/identity", label: "CMS · Identity" }, { href: "/admin/cms/school-profile", label: "CMS · School Profile" }, { href: "/admin/settings/school", label: "Pengaturan" }];
 
 export default function AdminShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();

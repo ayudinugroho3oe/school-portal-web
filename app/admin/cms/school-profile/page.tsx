@@ -1,0 +1,7 @@
+import { redirect } from "next/navigation";
+import SchoolContentEditor from "@/components/admin/SchoolContentEditor";
+import { getCurrentActor } from "@/lib/auth/session";
+import { can } from "@/lib/auth/permissions";
+import { schoolContentService } from "@/modules/school-content/application/services";
+export const dynamic = "force-dynamic";
+export default async function ProfilePage() { const actor=await getCurrentActor(); if(!actor)redirect("/admin/login"); if(!can(actor.role,"cms.profile.view"))return <div role="alert">Akses ditolak.</div>; const data=await schoolContentService.read(actor,crypto.randomUUID(),"profile"); return <><header className="mb-8"><p className="text-sm font-bold uppercase tracking-[.18em] text-teal-700">CMS</p><h1 className="mt-2 text-3xl font-black">School Profile</h1><p className="mt-2 text-slate-600">Kelola narasi profil sekolah tanpa rich text editor.</p></header><SchoolContentEditor endpoint="/api/v1/cms/school-profile" initial={JSON.parse(JSON.stringify(data))} readOnly={!can(actor.role,"cms.profile.edit")} fields={[{name:"summary",label:"Ringkasan",multiline:true,maxLength:500},{name:"history",label:"Sejarah",multiline:true,maxLength:10000},{name:"vision",label:"Visi",multiline:true,required:true,maxLength:5000},{name:"mission",label:"Misi",multiline:true,required:true,maxLength:5000},{name:"principalName",label:"Nama kepala sekolah",maxLength:120},{name:"principalPhotoMediaId",label:"Media ID foto kepala sekolah"},{name:"principalGreeting",label:"Sambutan kepala sekolah",multiline:true,maxLength:5000}]}/></>; }

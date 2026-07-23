@@ -42,7 +42,7 @@ The public website remains a separate presentation boundary. CMS publication may
 
 ### 1. School Identity
 
-Owns the stable school association plus editable public identity: display name, logo variants, favicon, address presentation, principal identity, and principal photo. Contact methods are ordered `ContactChannel` records and social networks are ordered `SocialLink` records; adding TikTok, Threads, Telegram, X, LinkedIn, or a future channel requires configuration, not schema changes. `schoolCode`, school ID, active status, timezone, and locale remain controlled technical identity. Only Super Admin may change technical identity.
+Owns one non-deletable working copy per School for editable public identity: `schoolName`, `shortName`, `tagline`, logo variants, and favicon. Contact methods remain ordered `ContactChannel` records; principal content belongs to School Profile. `schoolCode`, school ID, active status, timezone, and locale remain controlled technical identity outside this public content aggregate.
 
 ### 2. Homepage Content
 
@@ -50,7 +50,7 @@ Owns an ordered collection of `HomepageSection` records. Each section has a conf
 
 ### 3. Profile Content
 
-Owns history, vision, mission, principal welcome, short profile, values/character statements, and related media. Long content uses structured plain text and repeatable blocks, not arbitrary HTML.
+Owns one non-deletable working copy per School containing summary, history, vision, mission, principal name/greeting/photo, and structured values. Long content uses structured plain text and repeatable values, not arbitrary HTML. Vision and mission are mandatory for the Sprint 5.3.1 editor and publication.
 
 ### 4. Academic Programs
 

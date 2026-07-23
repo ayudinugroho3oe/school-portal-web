@@ -124,6 +124,8 @@ model School {
   publications       ContentPublication[]
   publicationHeads   ContentPublicationHead[]
   contentAuditEvents ContentAuditEvent[]
+  identity           SchoolIdentity?
+  profile            SchoolProfile?
 
   @@index([isActive])
   @@map("schools")
@@ -152,6 +154,10 @@ model MediaAsset {
   galleryCovers      GalleryAlbum[]   @relation("GalleryCoverMedia")
   galleryItems       GalleryItem[]    @relation("GalleryItemMedia")
   testimonialAvatars Testimonial[]    @relation("TestimonialAvatarMedia")
+  identityLogos      SchoolIdentity[] @relation("SchoolIdentityLogo")
+  identityDarkLogos  SchoolIdentity[] @relation("SchoolIdentityDarkLogo")
+  identityFavicons   SchoolIdentity[] @relation("SchoolIdentityFavicon")
+  principalPhotos    SchoolProfile[]  @relation("SchoolProfilePrincipalPhoto")
 
   @@unique([schoolId, storageKey])
   @@index([schoolId, status, createdAt])
@@ -428,6 +434,50 @@ model SchoolSettings {
   auditLogs               AuditLog[]
 
   @@map("school_settings")
+}
+
+model SchoolIdentity {
+  id              String                 @id @default(uuid()) @db.Uuid
+  schoolId        String                 @unique @db.Uuid
+  schoolName      String                 @db.VarChar(160)
+  shortName       String?                @db.VarChar(80)
+  tagline         String?                @db.VarChar(150)
+  logoMediaId     String?                @db.Uuid
+  logoDarkMediaId String?                @db.Uuid
+  faviconMediaId  String?                @db.Uuid
+  status          ContentLifecycleStatus @default(DRAFT)
+  createdAt       DateTime               @default(now()) @db.Timestamptz(3)
+  updatedAt       DateTime               @updatedAt @db.Timestamptz(3)
+  updatedByUserId String?                @db.Uuid
+  school          School                 @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  logoMedia       MediaAsset?            @relation("SchoolIdentityLogo", fields: [logoMediaId], references: [id], onDelete: Restrict)
+  logoDarkMedia   MediaAsset?            @relation("SchoolIdentityDarkLogo", fields: [logoDarkMediaId], references: [id], onDelete: Restrict)
+  faviconMedia    MediaAsset?            @relation("SchoolIdentityFavicon", fields: [faviconMediaId], references: [id], onDelete: Restrict)
+
+  @@index([schoolId, status])
+  @@map("school_identities")
+}
+
+model SchoolProfile {
+  id                    String                 @id @default(uuid()) @db.Uuid
+  schoolId              String                 @unique @db.Uuid
+  summary               String?                @db.VarChar(500)
+  history               String?                @db.VarChar(10000)
+  vision                String?                @db.VarChar(5000)
+  mission               String?                @db.VarChar(5000)
+  principalName         String?                @db.VarChar(120)
+  principalPhotoMediaId String?                @db.Uuid
+  principalGreeting     String?                @db.VarChar(5000)
+  valuesJson            Json?
+  status                ContentLifecycleStatus @default(DRAFT)
+  createdAt             DateTime               @default(now()) @db.Timestamptz(3)
+  updatedAt             DateTime               @updatedAt @db.Timestamptz(3)
+  updatedByUserId       String?                @db.Uuid
+  school                School                 @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  principalPhoto        MediaAsset?            @relation("SchoolProfilePrincipalPhoto", fields: [principalPhotoMediaId], references: [id], onDelete: Restrict)
+
+  @@index([schoolId, status])
+  @@map("school_profiles")
 }
 
 model AuditLog {

@@ -73,9 +73,13 @@ Stable installation identity: `id`, unique `schoolCode`, `schoolName`, `isActive
 
 Users and roles belong to the installation's authentication boundary. The existing User role can remain the authorization source because one installation serves one School. `SchoolMembership` is deliberately not required in Sprint 5.2; it may be introduced only if a future approved deployment model needs multiple schools or per-school membership inside one runtime.
 
-### SchoolProfile (one-to-one)
+### SchoolIdentity (one-to-one, implemented Sprint 5.3.1)
 
-`shortName`, `motto`, `principalName`, `principalPhotoMediaId`, `principalWelcome`, `shortProfile`, `history`, `vision`, `mission`, structured `valuesJson`, address presentation, and audit metadata. Contacts and social networks are related configuration collections, not fixed columns. Existing nullable SchoolSettings fields are migrated incrementally, not duplicated indefinitely.
+`id`, unique `schoolId`, required `schoolName`, optional `shortName`, `tagline`, `logoMediaId`, `logoDarkMediaId`, `faviconMediaId`, lifecycle `status`, timestamps, and `updatedByUserId`. Media relations are optional, same-School, and must be usable. The row is provisioned/backfilled for every School and cannot be deleted through CMS.
+
+### SchoolProfile (one-to-one, implemented Sprint 5.3.1)
+
+`id`, unique `schoolId`, optional `summary`, `history`, `vision`, `mission`, `principalName`, `principalPhotoMediaId`, `principalGreeting`, structured `valuesJson`, lifecycle `status`, timestamps, and `updatedByUserId`. Existing verified SchoolSettings values are backfilled; missing narrative content remains nullable until edited. Publish validation requires vision and mission.
 
 ### HomepageContent (one-to-one)
 

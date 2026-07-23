@@ -17,7 +17,9 @@ export type Permission =
   | "cms.program.view" | "cms.program.create" | "cms.program.edit" | "cms.program.publish" | "cms.program.archive" | "cms.program.delete" | "cms.program.reorder"
   | "cms.teacher.view" | "cms.teacher.create" | "cms.teacher.edit" | "cms.teacher.publish" | "cms.teacher.archive" | "cms.teacher.delete" | "cms.teacher.reorder"
   | "cms.gallery.view" | "cms.gallery.create" | "cms.gallery.edit" | "cms.gallery.publish" | "cms.gallery.archive" | "cms.gallery.delete" | "cms.gallery.reorder"
-  | "cms.testimonial.view" | "cms.testimonial.create" | "cms.testimonial.edit" | "cms.testimonial.publish" | "cms.testimonial.archive" | "cms.testimonial.delete" | "cms.testimonial.reorder";
+  | "cms.testimonial.view" | "cms.testimonial.create" | "cms.testimonial.edit" | "cms.testimonial.publish" | "cms.testimonial.archive" | "cms.testimonial.delete" | "cms.testimonial.reorder"
+  | "cms.identity.view" | "cms.identity.edit" | "cms.identity.publish" | "cms.identity.archive"
+  | "cms.profile.view" | "cms.profile.edit" | "cms.profile.publish" | "cms.profile.archive";
 export type Actor = { id: string; role: AppRole };
 
 const structuredContentAdminPermissions: readonly Permission[] = [
@@ -27,10 +29,11 @@ const structuredContentAdminPermissions: readonly Permission[] = [
   "cms.testimonial.view", "cms.testimonial.create", "cms.testimonial.edit", "cms.testimonial.publish", "cms.testimonial.archive", "cms.testimonial.reorder",
 ];
 const structuredContentDeletePermissions: readonly Permission[] = ["cms.program.delete", "cms.teacher.delete", "cms.gallery.delete", "cms.testimonial.delete"];
+const schoolContentPermissions: readonly Permission[] = ["cms.identity.view", "cms.identity.edit", "cms.identity.publish", "cms.identity.archive", "cms.profile.view", "cms.profile.edit", "cms.profile.publish", "cms.profile.archive"];
 
 const grants: Record<AppRole, readonly Permission[]> = {
-  SUPER_ADMIN: ["school_settings.initialize", "school_settings.read", "school_settings.update", "cms.configuration.read", "cms.contact_channel.manage", "cms.social_link.manage", "cms.cta.manage", "cms.media.view", "cms.media.create", "cms.media.edit", "cms.media.archive", "cms.media.delete", "cms.media.manage_media", ...structuredContentAdminPermissions, ...structuredContentDeletePermissions],
-  SCHOOL_ADMIN: ["school_settings.read", "school_settings.update", "cms.configuration.read", "cms.contact_channel.manage", "cms.social_link.manage", "cms.cta.manage", "cms.media.view", "cms.media.create", "cms.media.edit", "cms.media.archive", "cms.media.manage_media", ...structuredContentAdminPermissions],
+  SUPER_ADMIN: ["school_settings.initialize", "school_settings.read", "school_settings.update", "cms.configuration.read", "cms.contact_channel.manage", "cms.social_link.manage", "cms.cta.manage", "cms.media.view", "cms.media.create", "cms.media.edit", "cms.media.archive", "cms.media.delete", "cms.media.manage_media", ...structuredContentAdminPermissions, ...structuredContentDeletePermissions, ...schoolContentPermissions],
+  SCHOOL_ADMIN: ["school_settings.read", "school_settings.update", "cms.configuration.read", "cms.contact_channel.manage", "cms.social_link.manage", "cms.cta.manage", "cms.media.view", "cms.media.create", "cms.media.edit", "cms.media.archive", "cms.media.manage_media", ...structuredContentAdminPermissions, ...schoolContentPermissions],
   STAFF: ["school_settings.read"],
   TEACHER: [],
 };

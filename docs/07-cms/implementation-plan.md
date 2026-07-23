@@ -42,6 +42,8 @@ Quality gates: Prisma validate/generate, empty-test migration, migration from cu
 
 ### Sprint 5.3 — Identity, Homepage, Profile, Navigation and Footer
 
+**Sprint 5.3.1 checkpoint:** School Identity and School Profile foundations implemented with singleton working copies, additive backfill migration, Admin CMS editors, CMS/public APIs, and the Sprint 5.2.6 immutable publication lifecycle. Public visual resolver adoption remains intentionally deferred; the static fallback and public UI are unchanged.
+
 - Build admin editors and APIs for public identity, homepage, profile, contact, navigation, and footer.
 - Add navbar/mobile `Masuk` link with authenticated destination behavior and approved sidebar groups Dashboard, Website, Media, Pengaturan, and Pengguna.
 - Backfill working copies from verified settings/static content.

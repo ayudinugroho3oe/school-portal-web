@@ -2,7 +2,8 @@ import type{Actor,Permission}from"@/lib/auth/permissions";
 import{createCmsRequestContext,type SchoolContextResolver}from"@/modules/cms/application/context";
 import type{PublishableType,PublishingRepository}from"../domain/contracts";
 
-const domain=(type:PublishableType)=>type==="PROGRAM"?"program":type==="TEACHER_PROFILE"?"teacher":type==="GALLERY_ALBUM"?"gallery":"testimonial";
+const domains:Record<PublishableType,"program"|"teacher"|"gallery"|"testimonial"|"identity"|"profile">={PROGRAM:"program",TEACHER_PROFILE:"teacher",GALLERY_ALBUM:"gallery",TESTIMONIAL:"testimonial",SCHOOL_IDENTITY:"identity",SCHOOL_PROFILE:"profile"};
+const domain=(type:PublishableType)=>domains[type];
 export class PublishingApplicationService{
  constructor(private repository:PublishingRepository,private resolver:SchoolContextResolver){}
  private permission(type:PublishableType,action:"view"|"publish"|"archive"){return `cms.${domain(type)}.${action}` as Permission;}
